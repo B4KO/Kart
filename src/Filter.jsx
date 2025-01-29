@@ -1,18 +1,20 @@
 function Filter() {
   return (
-    <>
-      <div className="flex justify-evenly">
-        <select className="select select-bordered max-w-xs">
+      <div className="flex items-center gap-4 p-4 w-full max-w-5xl mx-auto">
+        {/* Let the dropdown fill available space */}
+        <select className="select select-bordered flex-1">
           <option disabled selected>
             Sektor
           </option>
           <option>Helse</option>
           <option>Oppvekst</option>
           <option>Teknisk</option>
-          <option>Social og Velfred</option>
-          <option>Samfredsel</option>
+          <option>Social og Velferd</option>
+          <option>Samferdsel</option>
         </select>
-        <select className="select select-bordered max-w-xs">
+
+        {/* Same for the Fylke dropdown */}
+        <select className="select select-bordered flex-1">
           <option disabled selected>
             Fylke
           </option>
@@ -32,15 +34,18 @@ function Filter() {
           <option value="50">Trøndelag - Trööndelage</option>
           <option value="18">Nordland - Nordlánnda</option>
         </select>
+
+        {/* Text input also allowed to expand */}
         <input
-          type="text"
-          placeholder="Søk"
-          className="input input-bordered max-w-xs"
+            type="text"
+            placeholder="Søk"
+            className="input input-bordered flex-1"
         />
-        <button className="btn">Søk</button>
-        <button className="btn">Nullstill</button>
+
+        {/* Keep the buttons at their natural or fixed widths */}
+        <button className="btn w-24">Søk</button>
+        <button className="btn w-24">Nullstill</button>
       </div>
-    </>
   );
 }
 
