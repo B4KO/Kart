@@ -1,25 +1,18 @@
-import Filter from "./Filter.jsx";
 import MapView from "./MapView.jsx";
-import ContentCard from "./ContentCard.jsx";
 import ResultsCard from "./ResultsCard.jsx";
 
 function Layout() {
   return (
-    <div className="flex flex-col gap-4 p-4">
-      {/* Row 1: Wide Element */}
-      <div className="p-4 rounded shadow-md">
-        <Filter />
-      </div>
-
+    <div className="flex flex-col gap-4 p-4 grow">
       {/* Row 2: Map and Card */}
-      <div className="grid grid-cols-3 gap-4">
+      <div className="grid grid-cols-3 gap-4 grow relative h-screen">
         {/* Map */}
-        <div className="col-span-2 rounded shadow-md">
+        <div className="col-span-2 rounded shadow-md grow relative h-screen">
           <MapView />
         </div>
 
         {/* Card */}
-        <div className="flex rounded shadow-md justify-center">
+        <div className="flex rounded shadow-md justify-center grow relative h-screen">
           <ResultsCard />
         </div>
       </div>

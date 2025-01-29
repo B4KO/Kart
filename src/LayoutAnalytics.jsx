@@ -1,8 +1,5 @@
-import Filter from "./Filter.jsx";
-import MapView from "./MapView.jsx";
+
 import Statistics from "./Statistics.jsx";
-import ContentCard from "./ContentCard.jsx";
-import ResultsCard from "./ResultsCard.jsx";
 import Chart from "./Chart.jsx";
 import ChartTwo from "./ChartTwo.jsx";
 
@@ -12,7 +9,6 @@ function Layout() {
       <div className="flex flex-col gap-4 p-4">
         {/* Row 1: Wide Element */}
         <div className="p-4 rounded shadow-md">
-          <Filter />
         </div>
 
         {/* Row 2: Map and Card */}

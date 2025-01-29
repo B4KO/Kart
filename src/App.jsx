@@ -11,7 +11,7 @@ function App() {
   const [activeTab, setActiveTab] = useState("map");
 
   return (
-    <div className="min-h-screen bg-base-100 text-base-content">
+    <div className="h-screen bg-base-100 text-base-content">
       {/* Tabs Header */}
       <div className="tabs tabs-boxed">
         <a
