@@ -1,6 +1,7 @@
 import { useState } from "react";
 import LayoutAnalytics from "./LayoutAnalytics.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faMap, faFlask, faTable } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 
@@ -13,26 +14,35 @@ function App() {
   return (
     <div className="h-screen bg-base-100 text-base-content">
       {/* Tabs Header */}
-      <div className="tabs tabs-boxed">
+      <div className="tabs tabs-boxed tabs-lg">
         <a
-          className={`tab tabs-lg ${activeTab === "map" ? "tab-active" : ""}`}
+          className={`tab ${activeTab === "map" ? "tab-active" : ""}`}
           onClick={() => setActiveTab("map")}
         >
-          <FontAwesomeIcon icon="fa-solid fa-map" /> Kart
+          <FontAwesomeIcon icon={ faMap } />
+          <p className="ml-1 text-lg">
+            Kart
+          </p>
         </a>
         <a
-          className={`tab tabs-lg ${
+          className={`tab ${
             activeTab === "analytics" ? "tab-active" : ""
           }`}
           onClick={() => setActiveTab("analytics")}
         >
-          <FontAwesomeIcon icon="fa-solid fa-flask" /> Analytikk
+          <FontAwesomeIcon icon={ faFlask } />
+          <p className="ml-1 text-lg">
+            Analytikk
+          </p>
         </a>
         <a
-          className={`tab tabs-lg ${activeTab === "table" ? "tab-active" : ""}`}
+          className={`tab ${activeTab === "table" ? "tab-active" : ""}`}
           onClick={() => setActiveTab("table")}
         >
-          <FontAwesomeIcon icon="fa-solid fa-table" /> Tabell
+          <FontAwesomeIcon icon={ faTable } />
+          <p className="ml-1 text-lg">
+            Tabell
+          </p>
         </a>
       </div>
 
@@ -42,6 +52,7 @@ function App() {
         {activeTab === "analytics" && <LayoutAnalytics />}
         {activeTab === "table" && <TableView />}
       </div>
+      {/* Tabs end */}
     </div>
   );
 }

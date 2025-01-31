@@ -1,26 +1,28 @@
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import fylkeData from "./Forenklet_Fylker.json";
+import ZoomToRegion from "./ZoomToRegion.jsx";
 
-function MapView() {
-  console.log(fylkeData);
 
-  return (
-    <>
-      <MapContainer
-        center={[64, 12]} // Center over Norway
-        zoom={5}
-        style={{ width: "100%", height: "100%" }}
-      >
-        <TileLayer
-          url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-          attribution="&copy; OpenStreetMap contributors"
-        />
 
-        {fylkeData && <GeoJSON data={fylkeData.features} />}
-      </MapContainer>
-    </>
-  );
+
+function MapView({ geojson, selectedRegion, onRegionClick }) {
+
+    const handleRegionClick = (event) => {
+        const regionName = event.target.feature.properties.fylkesnavn; // Adjust based on your GeoJSON
+        onRegionClick(regionName);
+    };
+
+    return (
+        <MapContainer
+            center={[63, 10]} // Default center
+            zoom={5} // Default zoom
+            style={{ height: "100%", width: "100%" }}
+        >
+            <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
+            <GeoJSON data={geojson} onEachFeature={(feature, layer) => layer.on('click', handleRegionClick)}  />
+            <ZoomToRegion geojson={geojson} selectedRegion={selectedRegion} />
+        </MapContainer>
+    );
 }
 
 export default MapView;

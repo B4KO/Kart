@@ -1,8 +1,8 @@
-import { useState } from "react";
-import ContentCard from "./ContentCard";
+import ContentCard from "./ContentCard.jsx";
+import {useState} from "react";
 
-function ResultsCard() {
-  // Example data
+// eslint-disable-next-line react/prop-types
+function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatus }) {
   const projects = [
     {
       projectId: 1,
@@ -10,6 +10,7 @@ function ResultsCard() {
       region: "Rogaland",
       title: "Campus Food Delivery App",
       sector: "Teknisk",
+      status: "I utvikling",
     },
     {
       projectId: 2,
@@ -17,6 +18,7 @@ function ResultsCard() {
       region: "Oslo",
       title: "Green Energy Optimization",
       sector: "Helse",
+      status: "Avsluttet",
     },
     {
       projectId: 3,
@@ -24,6 +26,7 @@ function ResultsCard() {
       region: "Vestland",
       title: "Smart Home Automation",
       sector: "Teknisk",
+      status: "Pilot",
     },
     {
       projectId: 4,
@@ -31,6 +34,7 @@ function ResultsCard() {
       region: "Trøndelag",
       title: "Arctic Wildlife Conservation",
       sector: "Social og Velferd",
+      status: "I drift",
     },
     {
       projectId: 5,
@@ -38,6 +42,7 @@ function ResultsCard() {
       region: "Nordland",
       title: "Fjord Tourism Platform",
       sector: "Samferdsel",
+      status: "Avsluttet",
     },
     {
       projectId: 6,
@@ -45,6 +50,7 @@ function ResultsCard() {
       region: "Troms og Finnmark",
       title: "Northern Lights Photography Hub",
       sector: "Oppvekst",
+      status: "Pilot",
     },
     {
       projectId: 7,
@@ -52,6 +58,7 @@ function ResultsCard() {
       region: "Innlandet",
       title: "Rural Agriculture Innovation",
       sector: "Social og Velferd",
+      status: "I utvikling",
     },
     {
       projectId: 8,
@@ -59,6 +66,7 @@ function ResultsCard() {
       region: "Agder",
       title: "Coastal Cleanup Initiative",
       sector: "Teknisk",
+      status: "I drift",
     },
     {
       projectId: 9,
@@ -66,6 +74,7 @@ function ResultsCard() {
       region: "Møre og Romsdal",
       title: "Offshore Wind Energy Development",
       sector: "Helse",
+      status: "I utvikling",
     },
     {
       projectId: 10,
@@ -73,15 +82,12 @@ function ResultsCard() {
       region: "Viken",
       title: "Urban Mobility Solutions",
       sector: "Samferdsel",
+      status: "I drift",
     },
   ];
 
-  // State for filters
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
 
-  // Pagination state
+  // State for pagination
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
 
@@ -91,10 +97,11 @@ function ResultsCard() {
   // Handle filtering
   const filteredProjects = projects.filter((project) => {
     return (
-      (selectedRegion === "" || project.region === selectedRegion) &&
-      (selectedSector === "" || project.sector === selectedSector) &&
-      (searchTerm === "" ||
-        project.title.toLowerCase().includes(searchTerm.toLowerCase()))
+        (selectedRegion === "" || project.region === selectedRegion) &&
+        (selectedSector === "" || project.sector === selectedSector) &&
+        (selectedStatus === "" || project.status === selectedStatus) &&
+        (searchTerm === "" ||
+            project.title.toLowerCase().includes(searchTerm.toLowerCase()))
     );
   });
 
@@ -114,121 +121,67 @@ function ResultsCard() {
     setSelectedProject(null);
   };
 
-  // Reset filters
-  const handleResetFilters = () => {
-    setSearchTerm("");
-    setSelectedRegion("");
-    setSelectedSector("");
-    setCurrentPage(0);
-  };
-
   return (
-    <div className="flex flex-col items-center w-full h-full">
-      {/* Filter component */}
-      <div className="w-full">
-        <div className="flex items-center gap-4 p-4 w-full max-w-5xl mx-auto flex-wrap">
-          <select
-            className="select select-bordered flex-1"
-            value={selectedSector}
-            onChange={(e) => setSelectedSector(e.target.value)}
-          >
-            <option value="">Sektor</option>
-            <option>Helse</option>
-            <option>Oppvekst</option>
-            <option>Teknisk</option>
-            <option>Social og Velferd</option>
-            <option>Samferdsel</option>
-          </select>
-          <select
-            className="select select-bordered flex-1"
-            value={selectedRegion}
-            onChange={(e) => setSelectedRegion(e.target.value)}
-          >
-            <option value="">Fylke</option>
-            <option>Rogaland</option>
-            <option>Oslo</option>
-            <option>Vestland</option>
-            <option>Trøndelag</option>
-            <option>Nordland</option>
-            <option>Troms og Finnmark</option>
-            <option>Innlandet</option>
-            <option>Agder</option>
-            <option>Møre og Romsdal</option>
-            <option>Viken</option>
-          </select>
-          <input
-            type="text"
-            placeholder="Søk"
-            className="input input-bordered flex-1"
-            value={searchTerm}
-            onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className="btn w-full p-2" onClick={handleResetFilters}>
-            Nullstill
-          </button>
-        </div>
-      </div>
-
-      {/* Table or ContentCard */}
-      {!selectedProject && (
-        <div className="card card-compact bg-base-100 w-full h-full p-0 shadow-xl">
-          <div className="card-body w-full h-full">
-            <div className="overflow-x-auto">
-              <table className="table">
-                <thead>
-                  <tr>
-                    <th>Prosjektnavn</th>
-                    <th>Fylke</th>
-                    <th>Sektor</th>
-                    <th>Eier</th>
-                  </tr>
-                </thead>
-                <tbody>
-                  {currentProjects.map((project) => (
-                    <tr
-                      key={project.projectId}
-                      onClick={() => handleRowClick(project)}
-                      className="hover:bg-gray-100 cursor-pointer"
-                    >
-                      <td>{project.title}</td>
-                      <td>{project.region}</td>
-                      <td>{project.sector}</td>
-                      <td>{project.owner}</td>
+      <div className="flex flex-col items-center w-full h-full">
+        {!selectedProject && (
+            <div className="card card-compact bg-base-100 w-full h-full p-0 shadow-xl">
+              <div className="card-body w-full h-full">
+                <div className="overflow-x-auto">
+                  <table className="table">
+                    <thead>
+                    <tr>
+                      <th>Prosjektnavn</th>
+                      <th>Fylke</th>
+                      <th>Sektor</th>
+                      <th>Status</th>
                     </tr>
-                  ))}
-                </tbody>
-              </table>
+                    </thead>
+                    <tbody>
+                    {currentProjects.map((project) => (
+                        <tr
+                            key={project.projectId}
+                            onClick={() => handleRowClick(project)}
+                            className="hover:bg-gray-100 cursor-pointer"
+                        >
+                          <td>{project.title}</td>
+                          <td>{project.region}</td>
+                          <td>{project.sector}</td>
+                          <td>{project.status}</td>
+                        </tr>
+                    ))}
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+              {/* Pagination Controls */}
+              <div className="join grid grid-cols-3 gap-2 p-4">
+                <button
+                    className="join-item btn btn-outline"
+                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
+                    disabled={currentPage === 0}
+                >
+                  Previous
+                </button>
+                <div className="flex items-center justify-center">
+                  Page {currentPage + 1} of {totalPages}
+                </div>
+                <button
+                    className="join-item btn btn-outline"
+                    onClick={() =>
+                        setCurrentPage((p) => Math.min(p + 1, totalPages - 1))
+                    }
+                    disabled={currentPage === totalPages - 1}
+                >
+                  Next
+                </button>
+              </div>
             </div>
-          </div>
-          {/* Pagination Controls */}
-          <div className="join grid grid-cols-3 gap-2 p-4">
-            <button
-              className="join-item btn btn-outline"
-              onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
-              disabled={currentPage === 0}
-            >
-              Previous
-            </button>
-            <div className="flex items-center justify-center">
-              Page {currentPage + 1} of {totalPages}
-            </div>
-            <button
-              className="join-item btn btn-outline"
-              onClick={() =>
-                setCurrentPage((p) => Math.min(p + 1, totalPages - 1))
-              }
-              disabled={currentPage === totalPages - 1}
-            >
-              Next
-            </button>
-          </div>
-        </div>
-      )}
+        )}
 
-      {selectedProject && (
-        <ContentCard project={selectedProject} onClose={handleCloseCard} />
-      )}
-    </div>
+        {selectedProject && (
+            <ContentCard project={selectedProject} onClose={handleCloseCard} />
+        )}
+      </div>
   );
 }
 
