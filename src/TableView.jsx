@@ -133,6 +133,8 @@ function TableView() {
     setCurrentPage(0);
   };
 
+  const [selectedProject, setSelectedProject] = useState(null);
+
   return (
     <div className="w-full">
       {/* Filter section */}
@@ -180,7 +182,7 @@ function TableView() {
           onChange={(e) => setSearchTerm(e.target.value)}
         />
         <button className="btn" onClick={handleResetFilters}>
-          Reset
+          Nullstill
         </button>
       </div>
 
@@ -211,7 +213,12 @@ function TableView() {
                 <td>{project.owner}</td>
                 <td>{project.sector}</td>
                 <td>
-                  <button className="btn btn-ghost btn-xs">Details</button>
+                  <button
+                    className="btn btn-ghost btn-xs"
+                    onClick={() => setSelectedProject(project)}
+                  >
+                    Details
+                  </button>
                 </td>
               </tr>
             ))}
@@ -241,6 +248,49 @@ function TableView() {
           </button>
         </div>
       </div>
+
+      {selectedProject && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="card lg:card-side bg-base-100 shadow-xl w-2/3 p-6">
+            <figure>
+              <img
+                src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
+                alt="Project Image"
+              />
+            </figure>
+            <div className="card-body">
+              <h2 className="card-title">{selectedProject.title}</h2>
+              <p className="text-gray-600">{selectedProject.description}</p>
+              <div className="mt-4">
+                <p>
+                  <strong>Owner:</strong> {selectedProject.owner}
+                </p>
+                <p>
+                  <strong>Region:</strong> {selectedProject.region}
+                </p>
+                <p>
+                  <strong>Status:</strong> {selectedProject.status}
+                </p>
+                <p>
+                  <strong>Sector:</strong> {selectedProject.sector}
+                </p>
+                <p>
+                  <strong>Contact:</strong> {selectedProject.contact.email} |{" "}
+                  {selectedProject.contact.phone}
+                </p>
+              </div>
+              <div className="card-actions justify-end">
+                <button
+                  className="btn btn-error"
+                  onClick={() => setSelectedProject(null)}
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }
