@@ -1,96 +1,7 @@
 import { useState } from "react";
+import projects from "./projectsData";
 
 function TableView() {
-  // Example: load the data locally or via an import
-  const testData = {
-    projects: [
-      {
-        projectId: 1,
-        owner: "Ricardo",
-        region: "Rogaland",
-        title: "Campus Food Delivery App",
-        description:
-          "A food delivery app for campus, similar to Foodora, built with ASP.NET Core and Entity Framework Core.",
-        status: "In Progress",
-        sector: "Teknisk",
-        contact: {
-          email: "ricardo@example.com",
-          phone: "+47 123 456 78",
-        },
-      },
-      {
-        projectId: 2,
-        owner: "John Doe",
-        region: "Oslo",
-        title: "Green Energy Optimization",
-        description:
-          "A project focused on optimizing renewable energy production using AI and machine learning.",
-        status: "Completed",
-        sector: "Helse",
-        contact: {
-          email: "john.doe@example.com",
-          phone: "+47 987 654 32",
-        },
-      },
-      {
-        projectId: 3,
-        owner: "Maria Hansen",
-        region: "Vestland",
-        title: "Smart Home Automation",
-        description:
-          "Developing an IoT-based smart home automation system with enhanced security and energy-saving features.",
-        status: "In Progress",
-        sector: "Teknisk",
-        contact: {
-          email: "maria.hansen@example.com",
-          phone: "+47 456 789 01",
-        },
-      },
-      {
-        projectId: 4,
-        owner: "Emma Olsen",
-        region: "Trøndelag",
-        title: "Arctic Wildlife Conservation",
-        description:
-          "A research initiative to track and protect endangered arctic wildlife using drone technology.",
-        status: "Planning",
-        sector: "Social og Velferd",
-        contact: {
-          email: "emma.olsen@example.com",
-          phone: "+47 654 321 09",
-        },
-      },
-      {
-        projectId: 5,
-        owner: "Lars Eriksen",
-        region: "Nordland",
-        title: "Fjord Tourism Platform",
-        description:
-          "An app to promote tourism in Norwegian fjords by providing booking services and local guides.",
-        status: "In Progress",
-        sector: "Samferdsel",
-        contact: {
-          email: "lars.eriksen@example.com",
-          phone: "+47 321 654 98",
-        },
-      },
-      {
-        projectId: 6,
-        owner: "Sofia Andersen",
-        region: "Troms og Finnmark",
-        title: "Northern Lights Photography Hub",
-        description:
-          "A community-driven platform for sharing and learning about Northern Lights photography.",
-        status: "Completed",
-        sector: "Oppvekst",
-        contact: {
-          email: "sofia.andersen@example.com",
-          phone: "+47 789 123 45",
-        },
-      },
-    ],
-  };
-
   // State for filtering
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -100,9 +11,6 @@ function TableView() {
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
   const [pageSize] = useState(5);
-
-  // The complete data array
-  const projects = testData.projects;
 
   // Filtered data based on search term, region, status, and sector
   const filteredProjects = projects.filter((project) => {

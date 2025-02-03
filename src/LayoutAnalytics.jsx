@@ -12,65 +12,14 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-const testData = {
-  projects: [
-    {
-      projectId: 1,
-      owner: "Ricardo",
-      region: "Rogaland",
-      title: "Campus Food Delivery App",
-      status: "In Progress",
-      sector: "Teknisk",
-    },
-    {
-      projectId: 2,
-      owner: "John Doe",
-      region: "Oslo",
-      title: "Green Energy Optimization",
-      status: "Completed",
-      sector: "Helse",
-    },
-    {
-      projectId: 3,
-      owner: "Maria Hansen",
-      region: "Vestland",
-      title: "Smart Home Automation",
-      status: "In Progress",
-      sector: "Teknisk",
-    },
-    {
-      projectId: 4,
-      owner: "Emma Olsen",
-      region: "Trøndelag",
-      title: "Arctic Wildlife Conservation",
-      status: "Planning",
-      sector: "Social og Velferd",
-    },
-    {
-      projectId: 5,
-      owner: "Lars Eriksen",
-      region: "Nordland",
-      title: "Fjord Tourism Platform",
-      status: "In Progress",
-      sector: "Samferdsel",
-    },
-    {
-      projectId: 6,
-      owner: "Sofia Andersen",
-      region: "Troms og Finnmark",
-      title: "Northern Lights Photography Hub",
-      status: "Completed",
-      sector: "Oppvekst",
-    },
-  ],
-};
+import projects from "./projectsData";
 
 function LayoutAnalytics() {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
 
-  const filteredProjects = testData.projects.filter(
+  const filteredProjects = projects.filter(
     (project) =>
       (selectedRegion === "" || project.region === selectedRegion) &&
       (selectedStatus === "" || project.status === selectedStatus) &&
@@ -94,7 +43,7 @@ function LayoutAnalytics() {
           onChange={(e) => setSelectedRegion(e.target.value)}
         >
           <option value="">All Regions</option>
-          {[...new Set(testData.projects.map((p) => p.region))].map(
+          {[...new Set(projects.map((p) => p.region))].map(
             (region) => (
               <option key={region} value={region}>
                 {region}
@@ -108,7 +57,7 @@ function LayoutAnalytics() {
           onChange={(e) => setSelectedStatus(e.target.value)}
         >
           <option value="">All Status</option>
-          {[...new Set(testData.projects.map((p) => p.status))].map(
+          {[...new Set(projects.map((p) => p.status))].map(
             (status) => (
               <option key={status} value={status}>
                 {status}
@@ -122,7 +71,7 @@ function LayoutAnalytics() {
           onChange={(e) => setSelectedSector(e.target.value)}
         >
           <option value="">All Sectors</option>
-          {[...new Set(testData.projects.map((p) => p.sector))].map(
+          {[...new Set(projects.map((p) => p.sector))].map(
             (sector) => (
               <option key={sector} value={sector}>
                 {sector}

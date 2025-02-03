@@ -1,92 +1,9 @@
 import ContentCard from "./ContentCard.jsx";
 import {useState} from "react";
+import projects from "./projectsData.jsx";
 
 // eslint-disable-next-line react/prop-types
 function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatus }) {
-  const projects = [
-    {
-      projectId: 1,
-      owner: "Ricardo",
-      region: "Rogaland",
-      title: "Campus Food Delivery App",
-      sector: "Teknisk",
-      status: "I utvikling",
-    },
-    {
-      projectId: 2,
-      owner: "John Doe",
-      region: "Oslo",
-      title: "Green Energy Optimization",
-      sector: "Helse",
-      status: "Avsluttet",
-    },
-    {
-      projectId: 3,
-      owner: "Maria Hansen",
-      region: "Vestland",
-      title: "Smart Home Automation",
-      sector: "Teknisk",
-      status: "Pilot",
-    },
-    {
-      projectId: 4,
-      owner: "Emma Olsen",
-      region: "Trøndelag",
-      title: "Arctic Wildlife Conservation",
-      sector: "Social og Velferd",
-      status: "I drift",
-    },
-    {
-      projectId: 5,
-      owner: "Lars Eriksen",
-      region: "Nordland",
-      title: "Fjord Tourism Platform",
-      sector: "Samferdsel",
-      status: "Avsluttet",
-    },
-    {
-      projectId: 6,
-      owner: "Sofia Andersen",
-      region: "Troms og Finnmark",
-      title: "Northern Lights Photography Hub",
-      sector: "Oppvekst",
-      status: "Pilot",
-    },
-    {
-      projectId: 7,
-      owner: "Kasper Nielsen",
-      region: "Innlandet",
-      title: "Rural Agriculture Innovation",
-      sector: "Social og Velferd",
-      status: "I utvikling",
-    },
-    {
-      projectId: 8,
-      owner: "Elise Johansen",
-      region: "Agder",
-      title: "Coastal Cleanup Initiative",
-      sector: "Teknisk",
-      status: "I drift",
-    },
-    {
-      projectId: 9,
-      owner: "Henrik Pedersen",
-      region: "Møre og Romsdal",
-      title: "Offshore Wind Energy Development",
-      sector: "Helse",
-      status: "I utvikling",
-    },
-    {
-      projectId: 10,
-      owner: "Anna Berg",
-      region: "Viken",
-      title: "Urban Mobility Solutions",
-      sector: "Samferdsel",
-      status: "I drift",
-    },
-  ];
-
-
   // State for pagination
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
