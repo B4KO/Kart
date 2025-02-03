@@ -26,7 +26,6 @@ function AnalyticsView() {
       (selectedSector === "" || project.sector === selectedSector)
   );
 
-
   const handleResetFilters = () => {
     setSelectedRegion("");
     setSelectedSector("");
@@ -42,53 +41,48 @@ function AnalyticsView() {
     ).map(([name, value]) => ({ name, value }));
 
   return (
-    <div className="p-4">
-      <div className="flex justify-center gap-4 mb-4">
+    <div className="flex flex-col gap-4 p-4 grow">
+      {/* Filters container that spans full width */}
+      <div className="flex gap-4 mb-4 w-full">
         <select
-          className="select select-bordered"
+          className="select select-bordered flex-1"
           value={selectedRegion}
           onChange={(e) => setSelectedRegion(e.target.value)}
         >
           <option value="">All Regions</option>
-          {[...new Set(projects.map((p) => p.region))].map(
-            (region) => (
-              <option key={region} value={region}>
-                {region}
-              </option>
-            )
-          )}
+          {[...new Set(projects.map((p) => p.region))].map((region) => (
+            <option key={region} value={region}>
+              {region}
+            </option>
+          ))}
         </select>
         <select
-          className="select select-bordered"
+          className="select select-bordered flex-1"
           value={selectedStatus}
           onChange={(e) => setSelectedStatus(e.target.value)}
         >
           <option value="">All Status</option>
-          {[...new Set(projects.map((p) => p.status))].map(
-            (status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            )
-          )}
+          {[...new Set(projects.map((p) => p.status))].map((status) => (
+            <option key={status} value={status}>
+              {status}
+            </option>
+          ))}
         </select>
         <select
-          className="select select-bordered"
+          className="select select-bordered flex-1"
           value={selectedSector}
           onChange={(e) => setSelectedSector(e.target.value)}
         >
           <option value="">All Sectors</option>
-          {[...new Set(projects.map((p) => p.sector))].map(
-            (sector) => (
-              <option key={sector} value={sector}>
-                {sector}
-              </option>
-            )
-          )}
+          {[...new Set(projects.map((p) => p.sector))].map((sector) => (
+            <option key={sector} value={sector}>
+              {sector}
+            </option>
+          ))}
         </select>
-        <button className="btn w-2/12 p-2" onClick={handleResetFilters}>
-              Nullstill
-          </button>
+        <button className="btn flex-1" onClick={handleResetFilters}>
+          Nullstill
+        </button>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

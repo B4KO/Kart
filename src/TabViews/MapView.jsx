@@ -26,7 +26,7 @@ function MapView() {
       <div className="flex flex-col gap-4 p-4 grow">
         {/* Filter Component */}
         <div className="w-full">
-          <div className="flex items-center gap-4 p-4 w-full max-w-5xl mx-auto">
+          <div className="flex items-center gap-4">
             <select
                 className="select select-bordered flex-1"
                 value={selectedSektor}
@@ -82,7 +82,7 @@ function MapView() {
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
             />
-            <button className="btn w-3/12 p-2" onClick={handleResetFilters}>
+            <button className="btn" onClick={handleResetFilters}>
               Nullstill
             </button>
           </div>
