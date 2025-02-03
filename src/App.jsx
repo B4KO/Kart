@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import LayoutAnalytics from "./LayoutAnalytics.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap, faFlask, faTable } from "@fortawesome/free-solid-svg-icons";
@@ -11,6 +11,16 @@ import Layout from "./Layout.jsx";
 function App() {
   const [activeTab, setActiveTab] = useState("map");
 
+  //server yest
+  const [message, setMessage] = useState('');
+  useEffect(() => {
+    fetch('http://localhost:5000/api/hello')
+      .then((response) => response.json())
+      .then((data) => setMessage(data.message))
+      .catch((error) => console.error('Error fetching message:', error));
+  }, []);
+  console.log(message);
+  
   return (
     <div className="h-screen bg-base-100 text-base-content">
       {/* Tabs Header */}
