@@ -13,9 +13,9 @@ app.get('/api/hello', (req, res) => {
   console.log('emitted hello world to client :)');
 });
 // Simple give data from excel
-app.get('/api/read-projects', (req, res) => {
+app.get('/api/v1/read-projects', (req, res) => {
   // Load the workbook
-  const workbook = XLSX.readFile('data.xlsx');
+  const workbook = XLSX.readFile('./data/projects.xlsx');
   // Get the first sheet name
   const sheetName = workbook.SheetNames[0];
   // Get the sheet data
