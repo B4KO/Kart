@@ -3,7 +3,7 @@ import {useState} from "react";
 import projects from "../projectsData.jsx";
 
 // eslint-disable-next-line react/prop-types
-function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatus }) {
+function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus }) {
   // State for pagination
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
@@ -14,8 +14,8 @@ function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatu
   // Handle filtering
   const filteredProjects = projects.filter((project) => {
     return (
-        (selectedRegion === "" || project.region === selectedRegion) &&
-        (selectedSector === "" || project.sector === selectedSector) &&
+        (selectedFylke === "" || project.region === selectedFylke) &&
+        (selectedSektor === "" || project.sector === selectedSektor) &&
         (selectedStatus === "" || project.status === selectedStatus) &&
         (searchTerm === "" ||
             project.title.toLowerCase().includes(searchTerm.toLowerCase()))

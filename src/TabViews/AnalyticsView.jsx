@@ -26,6 +26,13 @@ function AnalyticsView() {
       (selectedSector === "" || project.sector === selectedSector)
   );
 
+
+  const handleResetFilters = () => {
+    setSelectedRegion("");
+    setSelectedSector("");
+    setSelectedStatus("");
+  };
+
   const aggregateData = (key) =>
     Object.entries(
       filteredProjects.reduce((acc, project) => {
@@ -36,7 +43,7 @@ function AnalyticsView() {
 
   return (
     <div className="p-4">
-      <div className="flex gap-4 mb-4">
+      <div className="flex justify-center gap-4 mb-4">
         <select
           className="select select-bordered"
           value={selectedRegion}
@@ -79,6 +86,9 @@ function AnalyticsView() {
             )
           )}
         </select>
+        <button className="btn w-2/12 p-2" onClick={handleResetFilters}>
+              Nullstill
+          </button>
       </div>
 
       <div className="grid grid-cols-2 gap-4">

@@ -2,11 +2,11 @@ import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import ZoomToRegion from "./DONTWORKZoomToRegion.jsx";
 
-function Map({ geojson, selectedRegion, onRegionClick }) {
+function Map({ geojson, selectedFylke, onFylkeClick }) {
 
-    const handleRegionClick = (event) => {
-        const regionName = event.target.feature.properties.fylkesnavn; // Adjust based on your GeoJSON
-        onRegionClick(regionName);
+    const handleFylkeClick = (event) => {
+        const fylkeName = event.target.feature.properties.fylkesnavn; // Adjust based on your GeoJSON
+        onFylkeClick(fylkeName);
     };
 
     return (
@@ -16,8 +16,8 @@ function Map({ geojson, selectedRegion, onRegionClick }) {
             style={{ height: "100%", width: "100%" }}
         >
             <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" />
-            <GeoJSON data={geojson} onEachFeature={(feature, layer) => layer.on('click', handleRegionClick)}  />
-            <ZoomToRegion geojson={geojson} selectedRegion={selectedRegion} />
+            <GeoJSON data={geojson} onEachFeature={(feature, layer) => layer.on('click', handleFylkeClick)}  />
+            <ZoomToRegion geojson={geojson} selectedFylke={selectedFylke} />
         </MapContainer>
     );
 }

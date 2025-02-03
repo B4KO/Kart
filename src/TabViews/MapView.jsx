@@ -4,24 +4,22 @@ import ResultsCard from "../Components/ResultsCard.jsx";
 import geojson from "../../data/Forenklet_Fylker.json";
 
 
-
 function MapView() {
 
-
   const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
+  const [selectedFylke, setSelectedFylke] = useState("");
+  const [selectedSektor, setSelectedSektor] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
 
   const handleResetFilters = () => {
     setSearchTerm("");
-    setSelectedRegion("");
-    setSelectedSector("");
+    setSelectedFylke("");
+    setSelectedSektor("");
     setSelectedStatus("");
   };
 
-  const handleRegionClick = (regionName) => {
-    setSelectedRegion(regionName); // Update filter
+  const handleFylkeClick = (fylkeName) => {
+    setSelectedFylke(fylkeName); // Update filter
   };
 
   return (
@@ -31,8 +29,8 @@ function MapView() {
           <div className="flex items-center gap-4 p-4 w-full max-w-5xl mx-auto">
             <select
                 className="select select-bordered flex-1"
-                value={selectedSector}
-                onChange={(e) => setSelectedSector(e.target.value)}
+                value={selectedSektor}
+                onChange={(e) => setSelectedSektor(e.target.value)}
             >
               <option value="">Sektor</option>
               <option>Helse</option>
@@ -54,8 +52,8 @@ function MapView() {
             </select>
             <select
                 className="select select-bordered flex-1"
-                value={selectedRegion}
-                onChange={(e) => setSelectedRegion(e.target.value)}
+                value={selectedFylke}
+                onChange={(e) => setSelectedFylke(e.target.value)}
             >
               <option value="">Fylke</option>
               <option value="Møre og Romsdal">Møre og Romsdal</option>
@@ -93,13 +91,13 @@ function MapView() {
         {/* Main Layout */}
         <div className="grid grid-cols-3 gap-4 grow relative h-screen">
           <div className="col-span-2 rounded shadow-md grow relative h-screen">
-            <Map geojson={ geojson } onRegionClick={handleRegionClick} />
+            <Map geojson={ geojson } onFylkeClick={handleFylkeClick} />
           </div>
           <div className="flex rounded shadow-md justify-center grow relative h-screen">
             <ResultsCard
                 searchTerm={searchTerm}
-                selectedRegion={selectedRegion}
-                selectedSector={selectedSector}
+                selectedFylke={selectedFylke}
+                selectedSektor={selectedSektor}
                 selectedStatus={selectedStatus}
             />
           </div>
