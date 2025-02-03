@@ -1,6 +1,6 @@
 import ContentCard from "./ContentCard.jsx";
 import {useState} from "react";
-import projects from "./projectsData.jsx";
+import projects from "../projectsData.jsx";
 
 // eslint-disable-next-line react/prop-types
 function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatus }) {
@@ -38,6 +38,52 @@ function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatu
     setSelectedProject(null);
   };
 
+  const badgesBasedOnStatus = (projectStatus) => {
+      var styleClass = "badge font-bold badge-lg ";
+      switch (projectStatus) {
+        case 'Utvikles':        
+        case 'Pilot':
+          styleClass += "badge-warning";
+          break;
+        case 'I drift':
+          styleClass += "badge-info";
+          break;
+        case 'Avsluttet':
+          styleClass += "badge-success";
+          break;
+        default:
+          break;
+      };
+
+      return styleClass;
+  }
+
+
+  const badgesBasedOnSektor = (projectSektor) => {
+    var styleClass = "badge font-bold badge-lg ";
+    switch (projectSektor) {
+      case 'Helse':  
+        styleClass += "badge-error";
+        break;       
+      case 'Teknisk':
+        styleClass += "badge-primary";
+        break;
+      case 'Social':
+        styleClass += "badge-warning";
+        break;
+      case 'Oppvekst':
+        styleClass += "badge-success";
+        break;
+      case 'Samferdsel':
+        styleClass += "badge-secondary";
+        break;
+      default:
+        break;
+    };
+
+    return styleClass;
+}
+
   return (
       <div className="flex flex-col items-center w-full h-full">
         {!selectedProject && (
@@ -62,8 +108,8 @@ function ResultsCard({ searchTerm, selectedRegion, selectedSector, selectedStatu
                         >
                           <td>{project.title}</td>
                           <td>{project.region}</td>
-                          <td>{project.sector}</td>
-                          <td>{project.status}</td>
+                          <td><div className={badgesBasedOnSektor(project.sector)}>{project.sector}</div></td>
+                          <td><div className={badgesBasedOnStatus(project.status)}>{project.status}</div></td>
                         </tr>
                     ))}
                     </tbody>

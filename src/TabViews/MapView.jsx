@@ -1,7 +1,7 @@
 import { useState } from "react";
-import Map from "./Map.jsx";
-import ResultsCard from "./ResultsCard.jsx";
-import geojson from "./Forenklet_Fylker.json";
+import Map from "../Components/Map.jsx";
+import ResultsCard from "../Components/ResultsCard.jsx";
+import geojson from "../../data/Forenklet_Fylker.json";
 
 
 

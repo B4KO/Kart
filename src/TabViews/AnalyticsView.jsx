@@ -12,9 +12,9 @@ import {
   ResponsiveContainer,
 } from "recharts";
 
-import projects from "./projectsData";
+import projects from "../projectsData";
 
-function LayoutAnalytics() {
+function AnalyticsView() {
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
@@ -127,4 +127,4 @@ function LayoutAnalytics() {
   );
 }
 
-export default LayoutAnalytics;
+export default AnalyticsView;

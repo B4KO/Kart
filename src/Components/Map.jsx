@@ -1,6 +1,6 @@
 import { MapContainer, TileLayer, GeoJSON } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
-import ZoomToRegion from "./ZoomToRegion.jsx";
+import ZoomToRegion from "./DONTWORKZoomToRegion.jsx";
 
 function Map({ geojson, selectedRegion, onRegionClick }) {
 

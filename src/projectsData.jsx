@@ -5,7 +5,7 @@ const projects = [
       region: "Rogaland",
       title: "Campus Food Delivery App",
       sector: "Teknisk",
-      status: "I utvikling",
+      status: "Utvikles",
     },
     {
       projectId: 2,
@@ -28,7 +28,7 @@ const projects = [
       owner: "Emma Olsen",
       region: "Trøndelag",
       title: "Arctic Wildlife Conservation",
-      sector: "Social og Velferd",
+      sector: "Social",
       status: "I drift",
     },
     {
@@ -52,8 +52,8 @@ const projects = [
       owner: "Kasper Nielsen",
       region: "Innlandet",
       title: "Rural Agriculture Innovation",
-      sector: "Social og Velferd",
-      status: "I utvikling",
+      sector: "Social",
+      status: "Utvikles",
     },
     {
       projectId: 8,
@@ -69,7 +69,7 @@ const projects = [
       region: "Møre og Romsdal",
       title: "Offshore Wind Energy Development",
       sector: "Helse",
-      status: "I utvikling",
+      status: "Utvikles",
     },
     {
       projectId: 10,

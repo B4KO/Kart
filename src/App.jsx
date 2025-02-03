@@ -1,12 +1,12 @@
 import { useState, useEffect } from "react";
-import LayoutAnalytics from "./LayoutAnalytics.jsx";
+import AnalyticsView from "./TabViews/AnalyticsView.jsx";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMap, faFlask, faTable } from "@fortawesome/free-solid-svg-icons";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 
-import TableView from "./TableView";
-import MapView from "./MapView.jsx";
+import TableView from "./TabViews/TableView.jsx";
+import MapView from "./TabViews/MapView.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("map");
@@ -49,7 +49,7 @@ function App() {
       {/* Tab Content */}
       <div className="border border-base-300 rounded-lg">
         {activeTab === "map" && <MapView />}
-        {activeTab === "analytics" && <LayoutAnalytics />}
+        {activeTab === "analytics" && <AnalyticsView />}
         {activeTab === "table" && <TableView />}
       </div>
       {/* Tabs end */}

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import projects from "./projectsData";
+import projects from "../projectsData";
 
 function TableView() {
   // State for filtering
