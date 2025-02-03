@@ -11,6 +11,8 @@ export const DataProvider = ({ children }) => {
         .then(response => response.json())
         .then(fetchedData => setData(fetchedData))
         .catch(error => console.error('Error fetching data:', error));
+
+
   }, []);
 
   return (
