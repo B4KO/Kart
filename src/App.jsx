@@ -6,20 +6,10 @@ import "./App.css";
 import "leaflet/dist/leaflet.css";
 
 import TableView from "./TableView";
-import Layout from "./Layout.jsx";
+import MapView from "./MapView.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("map");
-
-  //server yest
-  const [message, setMessage] = useState('');
-  useEffect(() => {
-    fetch('http://localhost:5000/api/hello')
-      .then((response) => response.json())
-      .then((data) => setMessage(data.message))
-      .catch((error) => console.error('Error fetching message:', error));
-  }, []);
-  console.log(message);
   
   return (
     <div className="h-screen bg-base-100 text-base-content">
@@ -58,7 +48,7 @@ function App() {
 
       {/* Tab Content */}
       <div className="border border-base-300 rounded-lg">
-        {activeTab === "map" && <Layout />}
+        {activeTab === "map" && <MapView />}
         {activeTab === "analytics" && <LayoutAnalytics />}
         {activeTab === "table" && <TableView />}
       </div>

@@ -182,10 +182,6 @@ function TableView() {
                 <p>
                   <strong>Sector:</strong> {selectedProject.sector}
                 </p>
-                <p>
-                  <strong>Contact:</strong> {selectedProject.contact.email} |{" "}
-                  {selectedProject.contact.phone}
-                </p>
               </div>
               <div className="card-actions justify-end">
                 <button
