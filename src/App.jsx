@@ -10,7 +10,18 @@ import MapView from "./TabViews/MapView.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("map");
-  
+
+  // Fetch data on component mount
+  useEffect(() => {
+    fetch("http://localhost:5000/api/read-projects")
+      .then((response) => response.json())
+      .then((data) => {
+        console.log("Fetched Projects:", data); // ✅ Logs the fetched Excel data
+        setProjects(data);
+      })
+      .catch((error) => console.error("Error fetching projects:", error));
+  }, []);
+
   return (
     <div className="h-screen bg-base-100 text-base-content">
       {/* Tabs Header */}
