@@ -80,7 +80,7 @@ function AnalyticsView() {
             </option>
           ))}
         </select>
-        <button className="btn flex-1" onClick={handleResetFilters}>
+        <button className="btn" onClick={handleResetFilters}>
           Nullstill
         </button>
       </div>
