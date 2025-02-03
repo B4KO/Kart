@@ -7,22 +7,13 @@ import "leaflet/dist/leaflet.css";
 
 import TableView from "./TabViews/TableView.jsx";
 import MapView from "./TabViews/MapView.jsx";
+import {DataProvider} from "./DataContext.jsx";
 
 function App() {
   const [activeTab, setActiveTab] = useState("map");
 
-  // Fetch data on component mount
-  useEffect(() => {
-    fetch("http://localhost:5000/api/read-projects")
-      .then((response) => response.json())
-      .then((data) => {
-        console.log("Fetched Projects:", data); // ✅ Logs the fetched Excel data
-        setProjects(data);
-      })
-      .catch((error) => console.error("Error fetching projects:", error));
-  }, []);
-
   return (
+      <DataProvider>
     <div className="h-screen bg-base-100 text-base-content">
       {/* Tabs Header */}
       <div className="tabs tabs-boxed tabs-lg">
@@ -65,6 +56,7 @@ function App() {
       </div>
       {/* Tabs end */}
     </div>
+      </DataProvider>
   );
 }
 
