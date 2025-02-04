@@ -16,12 +16,18 @@ import {
 function AnalyticsView() {
   const projects = useContext(DataContext);
   console.log(projects);
+  const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28DFF", "#FF6384", "#36A2EB", "#4BC0C0"];
 
   const [selectedRegion, setSelectedRegion] = useState("");
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
 
   const [hideUndefined, setHideUndefined] = useState(true);
+  const [activeTab, setActiveTab] = useState("Overview");
+
+  const handleTabClick = (tab) => {
+    setActiveTab(tab);
+  };
 
   const filteredProjects = projects.filter(
     (project) =>
@@ -49,49 +55,45 @@ function AnalyticsView() {
 
     return (
       <div className="flex flex-col gap-4 p-4 grow">
-        <div className="flex gap-4 mb-4 w-full">
-          <select
-            className="select select-bordered flex-1"
-            value={selectedRegion}
-            onChange={(e) => setSelectedRegion(e.target.value)}
+        <div className="flex justify-center items-center gap-6 p-0">
+          <button
+            onClick={() => handleTabClick("Overview")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Overview" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
           >
-            <option value="">All Regions</option>
-            {[...new Set(projects.map((p) => p.region))].map((region) => (
-              <option key={region} value={region}>
-                {region}
-              </option>
-            ))}
-          </select>
-          <select
-            className="select select-bordered flex-1"
-            value={selectedStatus}
-            onChange={(e) => setSelectedStatus(e.target.value)}
-          >
-            <option value="">All Status</option>
-            {[...new Set(projects.map((p) => p.status))].map((status) => (
-              <option key={status} value={status}>
-                {status}
-              </option>
-            ))}
-          </select>
-          <select
-            className="select select-bordered flex-1"
-            value={selectedSector}
-            onChange={(e) => setSelectedSector(e.target.value)}
-          >
-            <option value="">All Sectors</option>
-            {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-              <option key={sector} value={sector}>
-                {sector}
-              </option>
-            ))}
-          </select>
-          <button className="btn" onClick={handleResetFilters}>
-            Nullstill
+            Overview
           </button>
-        </div>
-    
-        <label className="flex items-center gap-2">
+          <button
+            onClick={() => handleTabClick("Status")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Status" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
+          >
+            Status
+          </button>
+          <button
+            onClick={() => handleTabClick("Region")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Region" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
+          >
+            Region
+          </button>
+          <button
+            onClick={() => handleTabClick("Departement")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Departement" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
+          >
+            Departement
+          </button>
+          <button
+            onClick={() => handleTabClick("Prosjekteier")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Prosjekteier" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
+          >
+            Prosjekteier
+          </button>
+          <button
+            onClick={() => handleTabClick("Tidslinje")}
+            className={`px-4 py-2 rounded-md font-semibold transition-colors duration-200 ${activeTab === "Tidslinje" ? "bg-blue-500 text-white" : "bg-gray-200 text-gray-700 hover:bg-blue-100"}`}
+          >
+            Tidslinje
+          </button>
+
+          <label className="flex items-center gap-2">
           <input
             type="checkbox"
             checked={hideUndefined}
@@ -100,27 +102,13 @@ function AnalyticsView() {
           />
           Hide Undefined Projects
         </label>
-    
-        <div className="grid grid-cols-2 gap-4">
-          {["Status", "Region", "Departement", "Prosjekteier"].map((key) => (
-            <div key={key} className="card bg-base-100 shadow-xl p-4">
-              <h2 className="text-lg font-bold">
-                Projects by {key.charAt(0).toUpperCase() + key.slice(1)}
-              </h2>
-              <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={aggregateData(key)}>
-                  <XAxis dataKey="name" />
-                  <YAxis />
-                  <Tooltip />
-                  <Legend />
-                  <Bar dataKey="value" fill="#8884d8" />
-                </BarChart>
-              </ResponsiveContainer>
-            </div>
-          ))}
+        </div>
+        
+        <div className={`grid ${activeTab === "Overview" ? "grid-cols-2" : "grid-cols-1"} gap-4`}>
+          {(activeTab === "Status" || activeTab === "Overview") && (
           <div className="card bg-base-100 shadow-xl p-4">
             <h2 className="text-lg font-bold">Project Completion Rate</h2>
-            <ResponsiveContainer width="100%" height={300}>
+            <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 300 : 600}>
               <PieChart>
                 <Pie
                   data={aggregateData("Status")}
@@ -128,12 +116,12 @@ function AnalyticsView() {
                   nameKey="name"
                   cx="50%"
                   cy="50%"
-                  outerRadius={80}
+                  outerRadius={activeTab === "Overview" ? 100 : 200}
                 >
                   {aggregateData("Status").map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
-                      fill={["#0088FE", "#00C49F", "#FFBB28"][index % 3]}
+                      fill={COLORS[index % COLORS.length]}
                     />
                   ))}
                 </Pie>
@@ -142,6 +130,77 @@ function AnalyticsView() {
               </PieChart>
             </ResponsiveContainer>
           </div>
+          )}
+
+          {(activeTab === "Region" || activeTab === "Overview") && (
+          <div className="card bg-base-100 shadow-xl p-4">
+            <h2 className="text-lg font-bold">Projects by Status</h2>
+            <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 300 : 600}>
+              <BarChart data={aggregateData("Region")}>
+                <XAxis dataKey="name" />
+                <YAxis />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value">
+                  {aggregateData("Region").map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          )}
+
+          {(activeTab === "Departement" || activeTab === "Overview") && (
+          <div className="card bg-base-100 shadow-xl p-4">
+            <h2 className="text-lg font-bold">Projects by Region</h2>
+            <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
+              <BarChart layout="vertical" data={aggregateData("Departement")}>
+                <XAxis type="number" />
+                <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#00C49F" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          )}
+
+          {(activeTab === "Prosjekteier" || activeTab === "Overview") && (
+          <div className="card bg-base-100 shadow-xl p-4">
+            <h2 className="text-lg font-bold">Projects by Region</h2>
+            <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
+              <BarChart layout="vertical" data={aggregateData("Prosjekteier")} barGap={5} barSize={10}>
+                <XAxis type="number" />
+                <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="value" fill="#00C49F" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          )}
+
+          {(activeTab === "Tidslinje" || activeTab === "Overview") && (
+          <div className="card bg-base-100 shadow-xl p-4 col-span-2">
+            <h2 className="text-lg font-bold">Project Timeline</h2>
+            <ResponsiveContainer width="100%" height={300}>
+              <BarChart data={projects.map((p) => ({
+                  name: p.title,
+                  startYear: parseInt(p.startYear, 10),
+                  endYear: parseInt(p.endYear, 10),
+                  duration: parseInt(p.endYear, 10) - parseInt(p.startYear, 10)
+              }))}>
+                <XAxis type="number" domain={['dataMin', 'dataMax']} />
+                <YAxis dataKey="name" type="category" />
+                <Tooltip />
+                <Legend />
+                <Bar dataKey="duration" fill="#FFBB28" />
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
+          )}
+
         </div>
       </div>
     );
