@@ -41,13 +41,9 @@ function ContentCard({ project, onClose }) {
               {project.status}
             </span>
           </p>
-        </div>
-
-        {/* Footer with Project ID */}
-        <div className="card-actions justify-end mt-6">
-          <span className="badge badge-outline text-gray-600">
-            Project ID: {project.projectId}
-          </span>
+          <p className="text-gray-600">
+            {project.description}
+          </p>
         </div>
       </div>
     </div>

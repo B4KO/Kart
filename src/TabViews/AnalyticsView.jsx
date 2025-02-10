@@ -15,7 +15,7 @@ import {
 
 function AnalyticsView() {
   const projects = useContext(DataContext);
-  console.log(projects);
+
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#A28DFF", "#FF6384", "#36A2EB", "#4BC0C0"];
 
   const [selectedRegion, setSelectedRegion] = useState("");
@@ -35,12 +35,6 @@ function AnalyticsView() {
       (selectedStatus === "" || project.status === selectedStatus) &&
       (selectedSector === "" || project.sector === selectedSector)
   );
-
-  const handleResetFilters = () => {
-    setSelectedRegion("");
-    setSelectedSector("");
-    setSelectedStatus("");
-  };
 
   const aggregateData = (key) => {
     return Object.entries(
@@ -111,14 +105,14 @@ function AnalyticsView() {
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 300 : 600}>
               <PieChart>
                 <Pie
-                  data={aggregateData("Status")}
+                  data={aggregateData("status")}
                   dataKey="value"
                   nameKey="name"
                   cx="50%"
                   cy="50%"
                   outerRadius={activeTab === "Overview" ? 100 : 200}
                 >
-                  {aggregateData("Status").map((entry, index) => (
+                  {aggregateData("status").map((entry, index) => (
                     <Cell
                       key={`cell-${index}`}
                       fill={COLORS[index % COLORS.length]}
@@ -136,13 +130,13 @@ function AnalyticsView() {
           <div className="card bg-base-100 shadow-xl p-4">
             <h2 className="text-lg font-bold">Projects by Status</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 300 : 600}>
-              <BarChart data={aggregateData("Region")}>
+              <BarChart data={aggregateData("region")}>
                 <XAxis dataKey="name" />
                 <YAxis />
                 <Tooltip />
                 <Legend />
                 <Bar dataKey="value">
-                  {aggregateData("Region").map((entry, index) => (
+                  {aggregateData("region").map((entry, index) => (
                     <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
                   ))}
                 </Bar>
@@ -155,7 +149,7 @@ function AnalyticsView() {
           <div className="card bg-base-100 shadow-xl p-4">
             <h2 className="text-lg font-bold">Projects by Region</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
-              <BarChart layout="vertical" data={aggregateData("Departement")}>
+              <BarChart layout="vertical" data={aggregateData("departement")}>
                 <XAxis type="number" />
                 <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
                 <Tooltip />
@@ -170,7 +164,7 @@ function AnalyticsView() {
           <div className="card bg-base-100 shadow-xl p-4">
             <h2 className="text-lg font-bold">Projects by Region</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
-              <BarChart layout="vertical" data={aggregateData("Prosjekteier")} barGap={5} barSize={10}>
+              <BarChart layout="vertical" data={aggregateData("owner")} barGap={5} barSize={10}>
                 <XAxis type="number" />
                 <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
                 <Tooltip />
