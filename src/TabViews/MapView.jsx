@@ -1,36 +1,10 @@
-import {useEffect, useState} from "react";
+import { useState } from "react";
 import Map from "../Components/Map.jsx";
 import ResultsCard from "../Components/ResultsCard.jsx";
 import geojson from "../../data/Forenklet_Fylker.json";
-import axios from "axios";
 
 
 function MapView() {
-
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    console.log("useEffect running in DataProvider (axios version)");
-
-    axios.get('http://localhost:5000/api/v1/read-projects')
-        .then(response => {
-          console.log("Fetched data:", response.data);
-          setProjects(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          // If available, log additional details:
-          if (error.response) {
-            console.error("Response error data:", error.response.data);
-            console.error("Response status:", error.response.status);
-            console.error("Response headers:", error.response.headers);
-          } else if (error.request) {
-            console.error("No response received. Request was:", error.request);
-          } else {
-            console.error("Error", error.message);
-          }
-        }, []);
-  });
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFylke, setSelectedFylke] = useState("");
@@ -59,11 +33,11 @@ function MapView() {
                 onChange={(e) => setSelectedSektor(e.target.value)}
             >
               <option value="">Sektor</option>
-              {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-                  <option key={sector} value={sector}>
-                    {sector}
-                  </option>
-              ))}
+              <option>Helse</option>
+              <option>Oppvekst</option>
+              <option>Teknisk</option>
+              <option>Social og Velferd</option>
+              <option>Samferdsel</option>
             </select>
             <select
                 className="select select-bordered flex-1"
@@ -71,11 +45,10 @@ function MapView() {
                 onChange={(e) => setSelectedStatus(e.target.value)}
             >
               <option value="">Status</option>
-              {[...new Set(projects.map((p) => p.status))].map((status) => (
-                  <option key={status} value={status}>
-                    {status}
-                  </option>
-              ))}
+              <option>I utvikling</option>
+              <option>Avsluttet</option>
+              <option>Pilot</option>
+              <option>I drift</option>
             </select>
             <select
                 className="select select-bordered flex-1"
@@ -83,11 +56,23 @@ function MapView() {
                 onChange={(e) => setSelectedFylke(e.target.value)}
             >
               <option value="">Fylke</option>
-              {[...new Set(projects.map((p) => p.region))].map((region) => (
-                  <option key={region} value={region}>
-                    {region}
-                  </option>
-              ))}
+              <option value="Møre og Romsdal">Møre og Romsdal</option>
+              <option value="Telemark">Telemark</option>
+              <option value="Innlandet">Innlandet</option>
+              <option value="Buskerud">Buskerud</option>
+              <option value="Vestland">Vestland</option>
+              <option value="Vestfold">Vestfold</option>
+              <option value="Rogaland">Rogaland</option>
+              <option value="Agder">Agder</option>
+              <option value="Oslo">Oslo</option>
+              <option value="Østfold">Østfold</option>
+              <option value="Akershus">Akershus</option>
+              <option value="Finnmark - Finnmárku - Finmarkku">
+                Finnmark - Finnmárku - Finmarkku
+              </option>
+              <option value="Troms - Romsa - Tromssa">Troms - Romsa - Tromssa</option>
+              <option value="Trøndelag - Trööndelage">Trøndelag - Trööndelage</option>
+              <option value="Nordland - Nordlánnda">Nordland - Nordlánnda</option>
             </select>
 
             <input

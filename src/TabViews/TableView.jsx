@@ -1,5 +1,5 @@
-import {useEffect, useState} from "react";
-import axios from "axios";
+import { useContext, useState } from "react";
+import { DataContext } from "../DataContext";
 
 function TableView() {
   // State for filtering
@@ -8,36 +8,26 @@ function TableView() {
   const [selectedStatus, setSelectedStatus] = useState("");
   const [selectedSector, setSelectedSector] = useState("");
 
+  // Get projects from context.
+  // (Assume that your DataContext provides an array of objects as shown in your JSON)
+  const projects = useContext(DataContext);
+  console.log(projects);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
 
-  const [projects, setProjects] = useState([]);
+  // Note: In your JSON, you have keys like:
+  // - Prosjekttittel          → title
+  // - Beskrivelse av prosjekt  → description
+  // - Prosjekteier             → owner
+  // - Region                   → region
+  // - Eiertype                 → sector (or you may choose another field)
+  // - Status                   → status
+  // If your JSON objects do not have a unique id, you might use the title or index as key.
 
-  useEffect(() => {
-    console.log("useEffect running in DataProvider (axios version)");
-
-    axios.get('http://localhost:5000/api/v1/read-projects')
-        .then(response => {
-          console.log("Fetched data:", response.data);
-          setProjects(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          // If available, log additional details:
-          if (error.response) {
-            console.error("Response error data:", error.response.data);
-            console.error("Response status:", error.response.status);
-            console.error("Response headers:", error.response.headers);
-          } else if (error.request) {
-            console.error("No response received. Request was:", error.request);
-          } else {
-            console.error("Error", error.message);
-          }
-        }, []);
-  });
-
+  // Filtered data based on search term, region, status, and sector.
+  // (Adjust the filter criteria as needed.)
   const filteredProjects = projects.filter((project) => {
     return (
         (selectedRegion === "" || project.Region === selectedRegion) &&
@@ -78,11 +68,12 @@ function TableView() {
               onChange={(e) => setSelectedRegion(e.target.value)}
           >
             <option value="">Region</option>
-            {[...new Set(projects.map((p) => p.region))].map((region) => (
-                <option key={region} value={region}>
-                  {region}
-                </option>
-            ))}
+            {/* Adjust these options to match the regions in your data */}
+            <option value="Agder">Agder</option>
+            <option value="Akershus">Akershus</option>
+            <option value="Oslo">Oslo</option>
+            <option value="Vestland">Vestland</option>
+            <option value="Nordland">Nordland</option>
           </select>
           <select
               className="select select-bordered flex-1"
@@ -90,11 +81,11 @@ function TableView() {
               onChange={(e) => setSelectedStatus(e.target.value)}
           >
             <option value="">Status</option>
-            {[...new Set(projects.map((p) => p.status))].map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-            ))}
+            {/* Update these to match the Status values in your JSON */}
+            <option value="Pågår">Pågår</option>
+            <option value="Avsluttet">Avsluttet</option>
+            <option value="Planlagt">Planlagt</option>
+            {/* If needed, add other status values */}
           </select>
           <select
               className="select select-bordered flex-1"
@@ -102,12 +93,13 @@ function TableView() {
               onChange={(e) => setSelectedSector(e.target.value)}
           >
             <option value="">Sektor</option>
-            {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-                <option key={sector} value={sector}>
-                  {sector}
-                </option>
-            ))}
-            </select>
+            {/* In your JSON, "Eiertype" contains values like "Annet", "Statlig selskap", etc.
+              Update the options as needed. */}
+            <option value="Annet">Annet</option>
+            <option value="Statlig selskap">Statlig selskap</option>
+            <option value="Statlig virksomhet">Statlig virksomhet</option>
+            <option value="Kommunal sektor">Kommunal sektor</option>
+          </select>
           <input
               type="text"
               placeholder="Search"
@@ -194,22 +186,22 @@ function TableView() {
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{selectedProject.title}</h2>
+                  <h2 className="card-title">{selectedProject.Prosjekttittel}</h2>
                   <p className="text-gray-600">
-                    {selectedProject.description}
+                    {selectedProject["Beskrivelse av prosjekt"]}
                   </p>
                   <div className="mt-4">
                     <p>
-                      <strong>Eier:</strong> {selectedProject.owner}
+                      <strong>Eier:</strong> {selectedProject.Prosjekteier}
                     </p>
                     <p>
-                      <strong>Region:</strong> {selectedProject.region}
+                      <strong>Region:</strong> {selectedProject.Region}
                     </p>
                     <p>
-                      <strong>Status:</strong> {selectedProject.status}
+                      <strong>Status:</strong> {selectedProject.Status}
                     </p>
                     <p>
-                      <strong>Sektor:</strong> {selectedProject.sector}
+                      <strong>Sektor:</strong> {selectedProject["Eiertype"]}
                     </p>
                   </div>
                   <div className="card-actions justify-end">

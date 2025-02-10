@@ -1,35 +1,9 @@
 import ContentCard from "./ContentCard.jsx";
-import {useEffect, useState} from "react";
-import axios from "axios";
+import {useState} from "react";
+import projects from "../projectsData.jsx";
 
 // eslint-disable-next-line react/prop-types
 function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus }) {
-
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    console.log("useEffect running in DataProvider (axios version)");
-
-    axios.get('http://localhost:5000/api/v1/read-projects')
-        .then(response => {
-          console.log("Fetched data:", response.data);
-          setProjects(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          // If available, log additional details:
-          if (error.response) {
-            console.error("Response error data:", error.response.data);
-            console.error("Response status:", error.response.status);
-            console.error("Response headers:", error.response.headers);
-          } else if (error.request) {
-            console.error("No response received. Request was:", error.request);
-          } else {
-            console.error("Error", error.message);
-          }
-        });
-  }, []);
-
   // State for pagination
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
