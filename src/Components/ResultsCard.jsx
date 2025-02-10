@@ -1,9 +1,12 @@
 import ContentCard from "./ContentCard.jsx";
-import {useState} from "react";
-import projects from "../projectsData.jsx";
+import {useContext, useState} from "react";
+import {DataContext} from "../DataContext.jsx";
 
 // eslint-disable-next-line react/prop-types
 function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus }) {
+
+  const projects = useContext(DataContext);
+
   // State for pagination
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;

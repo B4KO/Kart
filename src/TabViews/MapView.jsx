@@ -1,10 +1,13 @@
-import { useState } from "react";
+import {useContext, useState} from "react";
 import Map from "../Components/Map.jsx";
 import ResultsCard from "../Components/ResultsCard.jsx";
 import geojson from "../../data/Forenklet_Fylker.json";
+import {DataContext} from "../DataContext.jsx";
 
 
 function MapView() {
+
+  const projects = useContext(DataContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFylke, setSelectedFylke] = useState("");
