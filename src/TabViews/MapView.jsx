@@ -36,11 +36,11 @@ function MapView() {
                 onChange={(e) => setSelectedSektor(e.target.value)}
             >
               <option value="">Sektor</option>
-              <option>Helse</option>
-              <option>Oppvekst</option>
-              <option>Teknisk</option>
-              <option>Social og Velferd</option>
-              <option>Samferdsel</option>
+              {[...new Set(projects.map((p) => p.sector))].map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+              ))}
             </select>
             <select
                 className="select select-bordered flex-1"
@@ -48,10 +48,11 @@ function MapView() {
                 onChange={(e) => setSelectedStatus(e.target.value)}
             >
               <option value="">Status</option>
-              <option>I utvikling</option>
-              <option>Avsluttet</option>
-              <option>Pilot</option>
-              <option>I drift</option>
+              {[...new Set(projects.map((p) => p.status))].map((status) => (
+                  <option key={status} value={status}>
+                    {status}
+                  </option>
+              ))}
             </select>
             <select
                 className="select select-bordered flex-1"
@@ -59,23 +60,11 @@ function MapView() {
                 onChange={(e) => setSelectedFylke(e.target.value)}
             >
               <option value="">Fylke</option>
-              <option value="Møre og Romsdal">Møre og Romsdal</option>
-              <option value="Telemark">Telemark</option>
-              <option value="Innlandet">Innlandet</option>
-              <option value="Buskerud">Buskerud</option>
-              <option value="Vestland">Vestland</option>
-              <option value="Vestfold">Vestfold</option>
-              <option value="Rogaland">Rogaland</option>
-              <option value="Agder">Agder</option>
-              <option value="Oslo">Oslo</option>
-              <option value="Østfold">Østfold</option>
-              <option value="Akershus">Akershus</option>
-              <option value="Finnmark - Finnmárku - Finmarkku">
-                Finnmark - Finnmárku - Finmarkku
-              </option>
-              <option value="Troms - Romsa - Tromssa">Troms - Romsa - Tromssa</option>
-              <option value="Trøndelag - Trööndelage">Trøndelag - Trööndelage</option>
-              <option value="Nordland - Nordlánnda">Nordland - Nordlánnda</option>
+              {[...new Set(projects.map((p) => p.region))].map((region) => (
+                  <option key={region} value={region}>
+                    {region}
+                  </option>
+              ))}
             </select>
 
             <input

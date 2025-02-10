@@ -11,7 +11,6 @@ function TableView() {
   // Get projects from context.
   // (Assume that your DataContext provides an array of objects as shown in your JSON)
   const projects = useContext(DataContext);
-  console.log(projects);
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
@@ -69,11 +68,11 @@ function TableView() {
           >
             <option value="">Region</option>
             {/* Adjust these options to match the regions in your data */}
-            <option value="Agder">Agder</option>
-            <option value="Akershus">Akershus</option>
-            <option value="Oslo">Oslo</option>
-            <option value="Vestland">Vestland</option>
-            <option value="Nordland">Nordland</option>
+            {[...new Set(projects.map((p) => p.sector))].map((region) => (
+                <option key={region} value={region}>
+                  {region}
+                </option>
+            ))}
           </select>
           <select
               className="select select-bordered flex-1"
@@ -81,11 +80,11 @@ function TableView() {
               onChange={(e) => setSelectedStatus(e.target.value)}
           >
             <option value="">Status</option>
-            {/* Update these to match the Status values in your JSON */}
-            <option value="Pågår">Pågår</option>
-            <option value="Avsluttet">Avsluttet</option>
-            <option value="Planlagt">Planlagt</option>
-            {/* If needed, add other status values */}
+            {[...new Set(projects.map((p) => p.status))].map((status) => (
+                <option key={status} value={status}>
+                  {status}
+                </option>
+            ))}
           </select>
           <select
               className="select select-bordered flex-1"
@@ -96,9 +95,11 @@ function TableView() {
             {/* In your JSON, "Eiertype" contains values like "Annet", "Statlig selskap", etc.
               Update the options as needed. */}
             <option value="Annet">Annet</option>
-            <option value="Statlig selskap">Statlig selskap</option>
-            <option value="Statlig virksomhet">Statlig virksomhet</option>
-            <option value="Kommunal sektor">Kommunal sektor</option>
+            {[...new Set(projects.map((p) => p.sector))].map((sector) => (
+                <option key={sector} value={sector}>
+                  {sector}
+                </option>
+            ))}
           </select>
           <input
               type="text"
@@ -129,15 +130,15 @@ function TableView() {
                 <tr key={index}>
                   <td>
                     <div className="flex flex-col gap-1">
-                      <span className="font-bold">{project.Prosjekttittel}</span>
+                      <span className="font-bold">{project.title}</span>
                       <span className="text-sm opacity-60">
-                      {project["Beskrivelse av prosjekt"]}
+                      {project.description}
                     </span>
                     </div>
                   </td>
-                  <td>{project.Region}</td>
-                  <td>{project.Prosjekteier}</td>
-                  <td>{project["Eiertype"]}</td>
+                  <td>{project.region}</td>
+                  <td>{project.owner}</td>
+                  <td>{project.ownership}</td>
                   <td>
                     <button
                         className="btn btn-ghost btn-xs"
@@ -186,22 +187,22 @@ function TableView() {
                   />
                 </figure>
                 <div className="card-body">
-                  <h2 className="card-title">{selectedProject.Prosjekttittel}</h2>
+                  <h2 className="card-title">{selectedProject.title}</h2>
                   <p className="text-gray-600">
-                    {selectedProject["Beskrivelse av prosjekt"]}
+                    {selectedProject.description}
                   </p>
                   <div className="mt-4">
                     <p>
-                      <strong>Eier:</strong> {selectedProject.Prosjekteier}
+                      <strong>Eier:</strong> {selectedProject.owner}
                     </p>
                     <p>
-                      <strong>Region:</strong> {selectedProject.Region}
+                      <strong>Region:</strong> {selectedProject.region}
                     </p>
                     <p>
-                      <strong>Status:</strong> {selectedProject.Status}
+                      <strong>Status:</strong> {selectedProject.status}
                     </p>
                     <p>
-                      <strong>Sektor:</strong> {selectedProject["Eiertype"]}
+                      <strong>Sektor:</strong> {selectedProject.sector}
                     </p>
                   </div>
                   <div className="card-actions justify-end">
