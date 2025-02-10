@@ -4,7 +4,9 @@ import React, { createContext, useState, useEffect } from 'react';
 export const DataContext = createContext();
 
 export const DataProvider = ({ children }) => {
-  const [data, setData] = useState(null);
+  const [data, setData] = useState(
+      []
+  );
 
   useEffect(() => {
     fetch('http://localhost:5000/api/v1/read-projects')

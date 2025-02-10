@@ -1,36 +1,13 @@
-import {useEffect, useState} from "react";
+import {useContext, useState} from "react";
 import Map from "../Components/Map.jsx";
 import ResultsCard from "../Components/ResultsCard.jsx";
 import geojson from "../../data/Forenklet_Fylker.json";
-import axios from "axios";
+import {DataContext} from "../DataContext.jsx";
 
 
 function MapView() {
 
-  const [projects, setProjects] = useState([]);
-
-  useEffect(() => {
-    console.log("useEffect running in DataProvider (axios version)");
-
-    axios.get('http://localhost:5000/api/v1/read-projects')
-        .then(response => {
-          console.log("Fetched data:", response.data);
-          setProjects(response.data);
-        })
-        .catch(error => {
-          console.error('Error fetching data:', error);
-          // If available, log additional details:
-          if (error.response) {
-            console.error("Response error data:", error.response.data);
-            console.error("Response status:", error.response.status);
-            console.error("Response headers:", error.response.headers);
-          } else if (error.request) {
-            console.error("No response received. Request was:", error.request);
-          } else {
-            console.error("Error", error.message);
-          }
-        }, []);
-  });
+  const projects = useContext(DataContext);
 
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedFylke, setSelectedFylke] = useState("");
@@ -59,9 +36,9 @@ function MapView() {
                 onChange={(e) => setSelectedSektor(e.target.value)}
             >
               <option value="">Sektor</option>
-              {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-                  <option key={sector} value={sector}>
-                    {sector}
+              {[...new Set(projects.map((p) => p.sector))].map((region) => (
+                  <option key={region} value={region}>
+                    {region}
                   </option>
               ))}
             </select>
