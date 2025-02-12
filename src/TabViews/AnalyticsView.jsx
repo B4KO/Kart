@@ -128,7 +128,7 @@ function AnalyticsView() {
 
           {(activeTab === "Region" || activeTab === "Overview") && (
           <div className="card bg-base-100 shadow-xl p-4">
-            <h2 className="text-lg font-bold">Projects by Status</h2>
+            <h2 className="text-lg font-bold">Prosjekter utifra fylker</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 300 : 600}>
               <BarChart data={aggregateData("region")}>
                 <XAxis dataKey="name" />
@@ -147,14 +147,18 @@ function AnalyticsView() {
 
           {(activeTab === "Departement" || activeTab === "Overview") && (
           <div className="card bg-base-100 shadow-xl p-4">
-            <h2 className="text-lg font-bold">Projects by Region</h2>
+            <h2 className="text-lg font-bold">Prosjekter utifra department</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
-              <BarChart layout="vertical" data={aggregateData("departement")}>
+              <BarChart layout="vertical" data={aggregateData("sector")}>
                 <XAxis type="number" />
                 <YAxis dataKey="name" type="category" width={150} tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="value" fill="#00C49F" />
+                <Bar dataKey="value" fill="#00C49F">
+                  {aggregateData("sector").map((entry, index) => (
+                    <Cell key={`cell-${index}`} fill={COLORS[index % COLORS.length]} />
+                  ))}
+                </Bar>
               </BarChart>
             </ResponsiveContainer>
           </div>
@@ -162,7 +166,7 @@ function AnalyticsView() {
 
           {(activeTab === "Prosjekteier" || activeTab === "Overview") && (
           <div className="card bg-base-100 shadow-xl p-4">
-            <h2 className="text-lg font-bold">Projects by Region</h2>
+            <h2 className="text-lg font-bold">Prosjekter utifra prosjektereiere</h2>
             <ResponsiveContainer width="100%" height={activeTab === "Overview" ? 500 : 600}>
               <BarChart layout="vertical" data={aggregateData("owner")} barGap={5} barSize={10}>
                 <XAxis type="number" />
@@ -177,19 +181,23 @@ function AnalyticsView() {
 
           {(activeTab === "Tidslinje" || activeTab === "Overview") && (
           <div className="card bg-base-100 shadow-xl p-4 col-span-2">
-            <h2 className="text-lg font-bold">Project Timeline</h2>
-            <ResponsiveContainer width="100%" height={300}>
-              <BarChart data={projects.map((p) => ({
+            <h2 className="text-lg font-bold">Prosjekt tidslinje</h2>
+            <ResponsiveContainer width="100%" height={3000}>
+              <BarChart layout="vertical" data={projects.map((p) => {
+                const start = parseInt(p.start, 10);
+                const end = parseInt(p.end, 10) === 0 ? new Date().getFullYear() : parseInt(p.end, 10);
+                return {
                   name: p.title,
-                  startYear: parseInt(p.startYear, 10),
-                  endYear: parseInt(p.endYear, 10),
-                  duration: parseInt(p.endYear, 10) - parseInt(p.startYear, 10)
-              }))}>
+                  start: start,
+                  end: end,
+                  duration: end - start
+                };
+              })} barGap={5} barSize={10}>
                 <XAxis type="number" domain={['dataMin', 'dataMax']} />
-                <YAxis dataKey="name" type="category" />
+                <YAxis dataKey="name" type="category" width={300} tick={{ fontSize: 12 }} />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="duration" fill="#FFBB28" />
+                <Bar dataKey="duration" fill="#00C49F" />
               </BarChart>
             </ResponsiveContainer>
           </div>
