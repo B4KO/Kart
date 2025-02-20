@@ -1,4 +1,5 @@
-
+// This a helper function takes in an array of projects and an object of filters
+// and returns a filtered array of projects.
 export function filterProjects(projects = [], filters) {
     return projects.filter((project) => {
         const matchesStatus =
