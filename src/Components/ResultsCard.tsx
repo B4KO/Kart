@@ -1,7 +1,12 @@
-import ContentCard from "./ContentCard.jsx";
+import ContentCard from "./ContentCard";
 import { useState } from "react";
+import {ProjectInterface} from "../Types/types";
 
-function ResultsCard({ projects }) {
+export type ResultCardProps = {
+    projects: ProjectInterface[];
+}
+
+function ResultsCard({ projects }: ResultCardProps) : JSX.Element {
   // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
@@ -10,7 +15,8 @@ function ResultsCard({ projects }) {
   const currentProjects = projects.slice(startIndex, startIndex + pageSize);
 
   // Selected project state
-  const [selectedProject, setSelectedProject] = useState(null);
+  // @ts-ignore
+  const [selectedProject, setSelectedProject]: [ProjectInterface, (value: ProjectInterface) => void] = useState(null);
 
   // Pagination helper functions
   const handlePrevPage = () => {
@@ -22,7 +28,7 @@ function ResultsCard({ projects }) {
   };
 
   // Handle row click to select a project
-  const handleRowClick = (project) => {
+  const handleRowClick = (project: ProjectInterface) => {
     setSelectedProject(project);
   };
 
@@ -31,6 +37,7 @@ function ResultsCard({ projects }) {
     setSelectedProject(null);
   };
 
+  // @ts-ignore
   return (
       <div className="flex flex-col items-center w-full h-full">
         {!selectedProject ? (

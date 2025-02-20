@@ -1,13 +1,17 @@
 import {faFlask, faMap, faTable} from "@fortawesome/free-solid-svg-icons";
+import {FilterInterface, TabOptions, TabsInterface} from "./Types/types";
 
-// Dashboard.jsx configuration
+
+
+// Dashboard.tsx configuration
 
 // Default active tab (overridden by URL params)
 // Accepted values: "map", "analytics", "table"
-export const DEFAULT_ACTIVE_TAB = "map";
+export const DEFAULT_ACTIVE_TAB : TabOptions = "map";
 
 // Default filters (overridden by URL params)
 // Accepted values: searchTerm, selectedFylke, selectedSektor, selectedStatus
+// Todo do implement the types for the dropdowns
 export const DEFAULT_FILTERS = {
     searchTerm: "",
     selectedFylke: "",
@@ -16,7 +20,7 @@ export const DEFAULT_FILTERS = {
 };
 
 // Default tab configuration
-export const DEFAULT_TABS_CONFIG = [
+export const DEFAULT_TABS_CONFIG: TabsInterface = [
     {
         id: "map",
         label: "Kart",
@@ -33,6 +37,8 @@ export const DEFAULT_TABS_CONFIG = [
         icon: faTable
     },
 ];
+
+
 
 // Get URL params
 // The params are searchTerm, selectedFylke, selectedSektor, selectedStatus, tab

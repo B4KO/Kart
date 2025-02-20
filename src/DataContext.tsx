@@ -1,8 +1,10 @@
 // DataContext.js
-import React, { createContext, useState, useEffect } from 'react';
+import React, {createContext, useState, useEffect, Context} from 'react';
+import {ProjectInterface} from "./Types/types";
 
-export const DataContext = createContext();
+export const DataContext = createContext([]);
 
+// @ts-ignore
 export const DataProvider = ({ children }) => {
   const [data, setData] = useState(
       []

@@ -1,11 +1,18 @@
 import {FontAwesomeIcon} from "@fortawesome/react-fontawesome";
+import {TabOptions, TabsInterface} from "../Types/types";
 
-const Tabs = ({ tabs, activeTab, onTabChange }) => {
+export interface TabsProps {
+    tabs: TabsInterface[];
+    activeTab: TabOptions;
+    onTabChange: (tabId: TabOptions) => void;
+}
+
+const Tabs = ({ tabs, activeTab, onTabChange } : TabsProps): JSX.Element => {
     return (
         <div>
             {/* Tabs Header */}
             <div className="tabs tabs-boxed tabs-lg">
-                {tabs.map((tab) => (
+                {tabs.map((tab: TabsInterface) => (
                     <a
                         key={tab.id}
                         className={`tab ${activeTab === tab.id ? "tab-active" : ""}`}
