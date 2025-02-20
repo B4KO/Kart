@@ -3,7 +3,7 @@ import {DataContext} from "./DataContext.jsx";
 import "./App.css";
 import "leaflet/dist/leaflet.css";
 
-import { INITIAL_FILTERS, DEFAULT_ACTIVE_TAB, TABS_CONFIG } from "./config.js";
+import { INITIAL_FILTERS, INITIAL_ACTIVE_TAB, DEFAULT_TABS_CONFIG } from "./config.js";
 import TableView from "./Views/TableView.jsx";
 import MapView from "./Views/MapView.jsx";
 import AnalyticsView from "./Views/AnalyticsView.jsx";
@@ -17,22 +17,11 @@ function Dashboard() {
 
   const projects = useContext(DataContext);
 
-  const urlParams = new URLSearchParams(window.location.search);
+  const [activeTab, setActiveTab] = useState(INITIAL_ACTIVE_TAB);
 
-  const initialActiveTab = urlParams.get("tab") || DEFAULT_ACTIVE_TAB;
+  const [filters, setFilters] = useState(INITIAL_FILTERS);
 
-  const initialFilters = {
-    searchTerm: urlParams.get("searchTerm") || INITIAL_FILTERS.searchTerm,
-    selectedFylke: urlParams.get("selectedFylke") || INITIAL_FILTERS.selectedFylke,
-    selectedSektor: urlParams.get("selectedSektor") || INITIAL_FILTERS.selectedSektor,
-    selectedStatus: urlParams.get("selectedStatus") || INITIAL_FILTERS.selectedStatus,
-  };
-
-  const [activeTab, setActiveTab] = useState(initialActiveTab);
-
-  const [filters, setFilters] = useState(initialFilters);
-
-  const handleResetFilters = () => setFilters(initialFilters);
+  const handleResetFilters = () => setFilters(INITIAL_FILTERS);
 
   const handleFilterChange = (field, value) => {
     setFilters((prev) => ({ ...prev, [field]: value }));
@@ -45,7 +34,7 @@ function Dashboard() {
 
   return (
     <div className="h-screen bg-base-100 text-base-content">
-     <Tabs tabs={TABS_CONFIG} activeTab={activeTab} onTabChange={(tabId) => setActiveTab(tabId)}/>
+     <Tabs tabs={DEFAULT_TABS_CONFIG} activeTab={activeTab} onTabChange={(tabId) => setActiveTab(tabId)}/>
       <FilterForm projects={projects} filters={filters} onFilterChange={handleFilterChange} onResetFilters={handleResetFilters} />
 
       <div className="mt-4">
