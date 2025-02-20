@@ -1,37 +1,27 @@
 import ContentCard from "./ContentCard.jsx";
-import {useContext, useState} from "react";
-import {DataContext} from "../DataContext.jsx";
+import { useState } from "react";
 
-// eslint-disable-next-line react/prop-types
-function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus }) {
-
-  const projects = useContext(DataContext);
-
-  // State for pagination
+function ResultsCard({ projects }) {
+  // Pagination state
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
+  const totalPages = Math.ceil(projects.length / pageSize);
+  const startIndex = currentPage * pageSize;
+  const currentProjects = projects.slice(startIndex, startIndex + pageSize);
 
-  // Track the selected project
+  // Selected project state
   const [selectedProject, setSelectedProject] = useState(null);
 
-  // Handle filtering
-  const filteredProjects = projects.filter((project) => {
-    return (
-        (selectedFylke === "" || project.region === selectedFylke) &&
-        (selectedSektor === "" || project.sector === selectedSektor) &&
-        (selectedStatus === "" || project.status === selectedStatus) &&
-        (searchTerm === "" ||
-            project.title.toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  });
+  // Pagination helper functions
+  const handlePrevPage = () => {
+    setCurrentPage((prev) => Math.max(prev - 1, 0));
+  };
 
-  // Pagination logic
-  const totalPages = Math.ceil(filteredProjects.length / pageSize);
-  const startIndex = currentPage * pageSize;
-  const endIndex = startIndex + pageSize;
-  const currentProjects = filteredProjects.slice(startIndex, endIndex);
+  const handleNextPage = () => {
+    setCurrentPage((prev) => Math.min(prev + 1, totalPages - 1));
+  };
 
-  // Handle row click
+  // Handle row click to select a project
   const handleRowClick = (project) => {
     setSelectedProject(project);
   };
@@ -41,55 +31,9 @@ function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus
     setSelectedProject(null);
   };
 
-  const badgesBasedOnStatus = (projectStatus) => {
-      var styleClass = "badge font-bold badge-lg ";
-      switch (projectStatus) {
-        case 'Utvikles':        
-        case 'Pilot':
-          styleClass += "badge-warning";
-          break;
-        case 'I drift':
-          styleClass += "badge-info";
-          break;
-        case 'Avsluttet':
-          styleClass += "badge-success";
-          break;
-        default:
-          break;
-      };
-
-      return styleClass;
-  }
-
-
-  const badgesBasedOnSektor = (projectSektor) => {
-    var styleClass = "badge font-bold badge-lg ";
-    switch (projectSektor) {
-      case 'Helse':  
-        styleClass += "badge-error";
-        break;       
-      case 'Teknisk':
-        styleClass += "badge-primary";
-        break;
-      case 'Social':
-        styleClass += "badge-warning";
-        break;
-      case 'Oppvekst':
-        styleClass += "badge-success";
-        break;
-      case 'Samferdsel':
-        styleClass += "badge-secondary";
-        break;
-      default:
-        break;
-    };
-
-    return styleClass;
-}
-
   return (
       <div className="flex flex-col items-center w-full h-full">
-        {!selectedProject && (
+        {!selectedProject ? (
             <div className="card card-compact bg-base-100 w-full h-full p-0 shadow-xl">
               <div className="card-body w-full h-full">
                 <div className="overflow-x-auto">
@@ -111,8 +55,8 @@ function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus
                         >
                           <td>{project.title}</td>
                           <td>{project.region}</td>
-                          <td><div className={badgesBasedOnSektor(project.sector)}>{project.sector}</div></td>
-                          <td><div className={badgesBasedOnStatus(project.status)}>{project.status}</div></td>
+                          <td>{project.sector}</td>
+                          <td>{project.status}</td>
                         </tr>
                     ))}
                     </tbody>
@@ -123,7 +67,7 @@ function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus
               <div className="join grid grid-cols-3 gap-2 p-4">
                 <button
                     className="join-item btn btn-outline"
-                    onClick={() => setCurrentPage((p) => Math.max(p - 1, 0))}
+                    onClick={handlePrevPage}
                     disabled={currentPage === 0}
                 >
                   Previous
@@ -133,18 +77,14 @@ function ResultsCard({ searchTerm, selectedFylke, selectedSektor, selectedStatus
                 </div>
                 <button
                     className="join-item btn btn-outline"
-                    onClick={() =>
-                        setCurrentPage((p) => Math.min(p + 1, totalPages - 1))
-                    }
+                    onClick={handleNextPage}
                     disabled={currentPage === totalPages - 1}
                 >
                   Next
                 </button>
               </div>
             </div>
-        )}
-
-        {selectedProject && (
+        ) : (
             <ContentCard project={selectedProject} onClose={handleCloseCard} />
         )}
       </div>

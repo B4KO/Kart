@@ -1,117 +1,25 @@
 import { useContext, useState } from "react";
 import { DataContext } from "../DataContext";
 
-function TableView() {
-  // State for filtering
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedRegion, setSelectedRegion] = useState("");
-  const [selectedStatus, setSelectedStatus] = useState("");
-  const [selectedSector, setSelectedSector] = useState("");
-
-  // Get projects from context.
-  // (Assume that your DataContext provides an array of objects as shown in your JSON)
-  const projects = useContext(DataContext);
+function TableView({ projects }) {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
   const pageSize = 5;
 
-  // Note: In your JSON, you have keys like:
-  // - Prosjekttittel          → title
-  // - Beskrivelse av prosjekt  → description
-  // - Prosjekteier             → owner
-  // - Region                   → region
-  // - Eiertype                 → sector (or you may choose another field)
-  // - Status                   → status
-  // If your JSON objects do not have a unique id, you might use the title or index as key.
-
-  // Filtered data based on search term, region, status, and sector.
-  // (Adjust the filter criteria as needed.)
-  const filteredProjects = projects.filter((project) => {
-    return (
-        (selectedRegion === "" || project.Region === selectedRegion) &&
-        (selectedStatus === "" || project.Status === selectedStatus) &&
-        (selectedSector === "" || project["Eiertype"] === selectedSector) &&
-        (searchTerm === "" ||
-            project.Prosjekttittel.toLowerCase().includes(searchTerm.toLowerCase()) ||
-            project["Beskrivelse av prosjekt"].toLowerCase().includes(searchTerm.toLowerCase()))
-    );
-  });
 
   // Calculate total pages
-  const totalPages = Math.ceil(filteredProjects.length / pageSize);
+  const totalPages = Math.ceil(projects.length / pageSize);
 
   // Calculate the slice for the current page
   const startIndex = currentPage * pageSize;
   const endIndex = startIndex + pageSize;
-  const currentProjects = filteredProjects.slice(startIndex, endIndex);
-
-  // Reset filters
-  const handleResetFilters = () => {
-    setSearchTerm("");
-    setSelectedRegion("");
-    setSelectedStatus("");
-    setSelectedSector("");
-    setCurrentPage(0);
-  };
+  const currentProjects = projects.slice(startIndex, endIndex);
 
   const [selectedProject, setSelectedProject] = useState(null);
 
   return (
       <div className="w-full">
-        {/* Filter section */}
-        <div className="flex items-center gap-4 p-4">
-          <select
-              className="select select-bordered flex-1"
-              value={selectedRegion}
-              onChange={(e) => setSelectedRegion(e.target.value)}
-          >
-            <option value="">Region</option>
-            {/* Adjust these options to match the regions in your data */}
-            {[...new Set(projects.map((p) => p.sector))].map((region) => (
-                <option key={region} value={region}>
-                  {region}
-                </option>
-            ))}
-          </select>
-          <select
-              className="select select-bordered flex-1"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-          >
-            <option value="">Status</option>
-            {[...new Set(projects.map((p) => p.status))].map((status) => (
-                <option key={status} value={status}>
-                  {status}
-                </option>
-            ))}
-          </select>
-          <select
-              className="select select-bordered flex-1"
-              value={selectedSector}
-              onChange={(e) => setSelectedSector(e.target.value)}
-          >
-            <option value="">Sektor</option>
-            {/* In your JSON, "Eiertype" contains values like "Annet", "Statlig selskap", etc.
-              Update the options as needed. */}
-            <option value="Annet">Annet</option>
-            {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-                <option key={sector} value={sector}>
-                  {sector}
-                </option>
-            ))}
-          </select>
-          <input
-              type="text"
-              placeholder="Search"
-              className="input input-bordered flex-1"
-              value={searchTerm}
-              onChange={(e) => setSearchTerm(e.target.value)}
-          />
-          <button className="btn" onClick={handleResetFilters}>
-            Nullstill
-          </button>
-        </div>
 
         {/* Table section */}
         <div className="overflow-x-auto">
