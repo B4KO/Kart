@@ -1,7 +1,19 @@
+// Icons
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTimes } from "@fortawesome/free-solid-svg-icons";
 
-function ContentCard({ project, onClose }) {
+// Types
+import { ProjectInterface } from "../Types/types";
+import React from "react";
+
+// Interface
+type ContentCardProps = {
+  project: ProjectInterface;
+  onClose: () => void; // Function to close the card
+}
+
+// ContentCard Component
+function ContentCard({ project, onClose }: ContentCardProps): React.JSX.Element | null {
   if (!project) return null;
 
   return (
@@ -20,7 +32,7 @@ function ContentCard({ project, onClose }) {
           {project.title}
         </h2>
 
-        {/* Project Details */}
+        {/* Types Details */}
         <div className="mt-4 space-y-2">
           <p className="text-gray-600">
             <span className="font-semibold">Region:</span> {project.region}
