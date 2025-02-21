@@ -17,6 +17,7 @@ function Map({ geojson, onFylkeClick }: MapProps): JSX.Element {
     // @ts-ignore
 
     return (
+        // @ts-ignore
         <MapContainer
             center={[63, 10]} // Default center
             zoom={5} // Default zoom

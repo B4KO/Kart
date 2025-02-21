@@ -37,9 +37,6 @@ export interface TabsInterface {
     label: string;
     icon: IconDefinition;
 }
-
-// src/types/geojson.ts
-
 export interface FylkeFeatureCollection {
     type: "FeatureCollection";
     name: string;
@@ -48,28 +45,22 @@ export interface FylkeFeatureCollection {
 
 export interface FylkeFeature {
     type: "Feature";
-    properties: FylkeProperties;
-    geometry: GeoJSONGeometry;
-}
-
-export interface FylkeProperties {
-    "objtype": string;
-    "samiskForvaltningsområde": boolean;
-    "identifikasjon.Identifikasjon.lokalId": string;
-    "identifikasjon.Identifikasjon.navnerom": string;
-    "identifikasjon.Identifikasjon.versjonId": string;
-    "datafangstdato": string | null;       // could be null
-    "oppdateringsdato": string;            // ISO date string
-    "datauttaksdato": string;              // ISO date string
-    "opphav": string | null;
-    "fylkesnummer": string;
-    "fylkesnavn": string;
-    "gyldigFra": string;                   // ISO date string
-}
-
-export interface GeoJSONGeometry {
-    type: "Polygon"; // Change this union if you expect other types (e.g. "MultiPolygon")
-    // Coordinates for a Polygon are an array of linear rings.
-    // Each linear ring is an array of coordinate pairs [longitude, latitude].
-    coordinates: number[][][];
+    properties: {
+        objtype: string;
+        samiskForvaltningsområde: boolean;
+        "identifikasjon.Identifikasjon.lokalId": string;
+        "identifikasjon.Identifikasjon.navnerom": string;
+        "identifikasjon.Identifikasjon.versjonId": string;
+        datafangstdato: string | null;
+        oppdateringsdato: string;
+        datauttaksdato: string;
+        opphav: string | null;
+        fylkesnummer: string;
+        fylkesnavn: string;
+        gyldigFra: string;
+    };
+    geometry: {
+        type: "Polygon";
+        coordinates: number[][][]; // Array of rings, each an array of [lng, lat] coordinates
+    };
 }

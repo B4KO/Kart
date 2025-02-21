@@ -20,10 +20,8 @@ function TableView({ projects }: TableViewPorps): JSX.Element {
   const endIndex = startIndex + pageSize;
   const currentProjects = projects.slice(startIndex, endIndex);
 
-  // @ts-ignore
-  const [selectedProject, setSelectedProject]: [ProjectInterface, (value: (((prevState: null) => null) | null)) => void] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectInterface | null>(null);
 
-  // @ts-ignore
   return (
       <div className="w-full">
 

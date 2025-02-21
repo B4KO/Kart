@@ -56,7 +56,6 @@ function ResultsCard({ projects }: ResultCardProps) : JSX.Element {
                     <tbody>
                     {currentProjects.map((project) => (
                         <tr
-                            key={project.projectId}
                             onClick={() => handleRowClick(project)}
                             className="hover:bg-gray-100 cursor-pointer"
                         >

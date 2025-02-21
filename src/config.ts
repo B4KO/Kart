@@ -12,7 +12,7 @@ export const DEFAULT_ACTIVE_TAB : TabOptions = "map";
 // Default filters (overridden by URL params)
 // Accepted values: searchTerm, selectedFylke, selectedSektor, selectedStatus
 // Todo do implement the types for the dropdowns
-export const DEFAULT_FILTERS = {
+export const DEFAULT_FILTERS : FilterInterface = {
     searchTerm: "",
     selectedFylke: "",
     selectedSektor: "",
@@ -20,7 +20,7 @@ export const DEFAULT_FILTERS = {
 };
 
 // Default tab configuration
-export const DEFAULT_TABS_CONFIG: TabsInterface = [
+export const DEFAULT_TABS_CONFIG: TabsInterface[] = [
     {
         id: "map",
         label: "Kart",
@@ -45,7 +45,7 @@ export const DEFAULT_TABS_CONFIG: TabsInterface = [
 // Example: https://localhost:PORT/?tab=DAR&searchTerm=FOO&selectedFylke=BAR&selectedSektor=BAZ&selectedStatus=QUX
 export const urlParams = new URLSearchParams(window.location.search);
 
-export const INITIAL_ACTIVE_TAB = urlParams.get("tab") || DEFAULT_ACTIVE_TAB;
+export const INITIAL_ACTIVE_TAB : TabOptions = <"map" | "analytics" | "table">urlParams.get("tab") || DEFAULT_ACTIVE_TAB;
 
 export const INITIAL_FILTERS = {
     searchTerm: urlParams.get("searchTerm") || DEFAULT_FILTERS.searchTerm,

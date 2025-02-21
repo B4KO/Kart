@@ -12,7 +12,7 @@ import Tabs from "./Components/Tabs";
 import {useContext, useMemo, useState} from "react";
 import FilterForm from "./Components/FilterForm";
 import {filterProjects} from "./Helpers/filterProjects";
-import {TabOptions, FilterOptions} from "./Types/types";
+import {TabOptions, FilterOptions, ProjectInterface} from "./Types/types";
 
 
 
@@ -20,7 +20,7 @@ function Dashboard(): JSX.Element {
 
   const projects = useContext(DataContext);
 
-  const [activeTab, setActiveTab] = useState(INITIAL_ACTIVE_TAB);
+  const [activeTab, setActiveTab] = useState<TabOptions>(INITIAL_ACTIVE_TAB);
 
   const [filters, setFilters] = useState(INITIAL_FILTERS);
 
