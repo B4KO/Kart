@@ -2,14 +2,20 @@
 // and returns a filtered array of projects.
 import {FilterInterface, ProjectInterface} from "../Types/types";
 
-export function filterProjects(projects: Array<ProjectInterface> = [], filters: FilterInterface): ProjectInterface[] {
+export function filterProjects(
+    projects: Array<ProjectInterface> = [],
+    filters: FilterInterface
+): ProjectInterface[] {
     return projects.filter((project: ProjectInterface): boolean => {
         const matchesStatus: boolean =
-            !filters.selectedStatus || project.status === filters.selectedStatus;
+            !filters.selectedStatus.length || filters.selectedStatus.includes(project.status);
+
         const matchesSektor: boolean =
-            !filters.selectedSektor || project.sector === filters.selectedSektor;
+            !filters.selectedSektor.length || filters.selectedSektor.includes(project.sector);
+
         const matchesFylke: boolean =
-            !filters.selectedFylke || project.region === filters.selectedFylke;
+            !filters.selectedFylke.length || filters.selectedFylke.includes(project.region);
+
         const matchesSearchTerm: boolean =
             !filters.searchTerm || project.title.toLowerCase().includes(filters.searchTerm.toLowerCase());
 

@@ -26,9 +26,9 @@ export interface ProjectInterface {
 }
 
 export interface FilterInterface {
-    selectedSektor: string;
-    selectedStatus: string;
-    selectedFylke: string;
+    selectedSektor: string[];
+    selectedStatus: string[];
+    selectedFylke: string[];
     searchTerm: string;
 }
 

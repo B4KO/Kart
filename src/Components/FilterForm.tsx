@@ -3,7 +3,7 @@ import {FilterInterface, FilterOptions, ProjectInterface} from "../Types/types";
 type FilterFormProps = {
     projects: ProjectInterface[];
     filters: FilterInterface;
-    onFilterChange: (key: FilterOptions, value: string) => void;
+    onFilterChange: (key: FilterOptions, value: string[]) => void;
     onResetFilters: () => void;
 };
 
@@ -12,6 +12,16 @@ export default function FilterForm({ projects, filters, onFilterChange, onResetF
     const sectors = [...new Set(projects.map((p) => p.sector))];
     const statuses = [...new Set(projects.map((p) => p.status))];
     const regions = [...new Set(projects.map((p) => p.region))];
+
+    // Helper function to toggle checkbox selection
+    const handleCheckboxChange = (key: FilterOptions, selectedValue: string) => {
+        const currentValues = filters[key] as string[]; // Ensure it's an array
+        const newValues = currentValues.includes(selectedValue)
+            ? currentValues.filter((v) => v !== selectedValue) // Remove if already selected
+            : [...currentValues, selectedValue]; // Add if not selected
+
+        onFilterChange(key, newValues);
+    };
 
     return (
         <div className="w-full">
@@ -24,8 +34,8 @@ export default function FilterForm({ projects, filters, onFilterChange, onResetF
                             <label key={sector}>
                                 <input
                                     type="checkbox"
-                                    checked={filters.selectedSektor === sector}
-                                    onChange={() => onFilterChange("selectedSektor", sector)}
+                                    checked={filters.selectedSektor.includes(sector)}
+                                    onChange={() => handleCheckboxChange("selectedSektor", sector)}
                                 />
                                 {sector}
                             </label>
@@ -41,8 +51,8 @@ export default function FilterForm({ projects, filters, onFilterChange, onResetF
                             <label key={status}>
                                 <input
                                     type="checkbox"
-                                    checked={filters.selectedStatus === status}
-                                    onChange={() => onFilterChange("selectedStatus", status)}
+                                    checked={filters.selectedStatus.includes(status)}
+                                    onChange={() => handleCheckboxChange("selectedStatus", status)}
                                 />
                                 {status}
                             </label>
@@ -58,8 +68,8 @@ export default function FilterForm({ projects, filters, onFilterChange, onResetF
                             <label key={region}>
                                 <input
                                     type="checkbox"
-                                    checked={filters.selectedFylke === region}
-                                    onChange={() => onFilterChange("selectedFylke", region)}
+                                    checked={filters.selectedFylke.includes(region)}
+                                    onChange={() => handleCheckboxChange("selectedFylke", region)}
                                 />
                                 {region}
                             </label>
