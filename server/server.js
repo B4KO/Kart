@@ -9,7 +9,7 @@ app.use(cors());
 
 // Simple route to send a "Hello, World!" message
 app.get('/api/hello', (req, res) => {
-  res.json({ message: 'Hello, World from the server!' });
+  res.status(200).json({ message: 'Hello, World from the server!' });
   console.log('emitted hello world to client :)');
 });
 // Simple give data from excel
@@ -22,11 +22,15 @@ app.get('/api/v1/read-projects', (req, res) => {
   const sheet = workbook.Sheets[sheetName];
   // Convert sheet data to JSON
   const data = XLSX.utils.sheet_to_json(sheet);
-  res.json(data);
+  res.status(200).json(data);
   console.log(data);
 });
 
-// Start the server
-app.listen(port, () => {
-  console.log(`Server running on http://localhost:${port}`);
-});
+// Only start the server if it's not being tested
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    console.log(`Server running on http://localhost:${port}`);
+  });
+}
+
+module.exports = app; // Change export to CommonJS
