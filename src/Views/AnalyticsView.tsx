@@ -12,6 +12,7 @@ import {
   Legend,
   ResponsiveContainer,
 } from "recharts";
+import {ProjectInterface} from "../Types/types";
 
 function AnalyticsView() {
   const projects = useContext(DataContext);
@@ -25,22 +26,23 @@ function AnalyticsView() {
             const [hideUndefined, setHideUndefined] = useState(true);
             const [activeTab, setActiveTab] = useState("Overview");
 
-            const handleTabClick = (tab) => {
+            const handleTabClick = (tab: any) => {
               setActiveTab(tab);
             };
 
             const filteredProjects = projects.filter(
-            (project) =>
+            (project: ProjectInterface ) =>
             (selectedRegion === "" || project.region === selectedRegion) &&
             (selectedStatus === "" || project.status === selectedStatus) &&
             (selectedSector === "" || project.sector === selectedSector)
             );
 
-            const aggregateData = (key) => {
+            const aggregateData = (key: any) => {
               return Object.entries(
               filteredProjects.reduce((acc, project) => {
               if (project[key] !== "Informasjon mangler" || !hideUndefined) {
-              acc[project[key]] = (acc[project[key]] || 0) + 1;
+              // @ts-ignore
+                  acc[project[key]] = (acc[project[key]] || 0) + 1;
             }
               return acc;
             }, {})
@@ -183,7 +185,7 @@ function AnalyticsView() {
           <div className="card bg-base-100 shadow-xl p-4 col-span-2">
             <h2 className="text-lg font-bold">Prosjekt tidslinje</h2>
             <ResponsiveContainer width="100%" height={3000}>
-              <BarChart layout="vertical" data={projects.map((p) => {
+              <BarChart layout="vertical" data={projects.map((p: ProjectInterface) => {
                 const start = parseInt(p.start, 10);
                 const end = parseInt(p.end, 10) === 0 ? new Date().getFullYear() : parseInt(p.end, 10);
                 return {

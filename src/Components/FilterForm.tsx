@@ -1,4 +1,13 @@
-export default function FilterForm({ projects, filters, onFilterChange, onResetFilters }) {
+import {FilterInterface, FilterOptions, ProjectInterface} from "../Types/types";
+
+type FilterFormProps = {
+    projects: ProjectInterface[];
+    filters: FilterInterface;
+    onFilterChange: (key: FilterOptions, value: string) => void;
+    onResetFilters: () => void;
+}
+
+export default function FilterForm({ projects, filters, onFilterChange, onResetFilters }: FilterFormProps) : JSX.Element {
     return (
         <div className="w-full">
             <div className="flex items-center gap-4 m-4">

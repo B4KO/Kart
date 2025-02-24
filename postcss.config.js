@@ -1,4 +1,4 @@
-// postcss.config.js (ES module format)
+// postcss.config.ts (ES module format)
 export default {
     plugins: {
         tailwindcss: {},

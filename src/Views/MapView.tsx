@@ -1,11 +1,17 @@
-import Map from "../Components/Map.jsx";
-import ResultsCard from "../Components/ResultsCard.jsx";
-import geojson from "../../data/Forenklet_Fylker.json";
+import Map from "../Components/Map";
+import ResultsCard from "../Components/ResultsCard";
+import geoJsonData from "../../data/Forenklet_Fylker.json";
+import {FylkeFeatureCollection, ProjectInterface} from "../Types/types";
 
+export type MapViewProps = {
+    projects: ProjectInterface[];
+    onFylkeClick: (fylkeName: string) => void;
+}
 
-function MapView({ projects, onFylkeClick }) {
-
-  const handleFylkeClick = (fylkeName) => {
+function MapView({ projects, onFylkeClick } : MapViewProps) : JSX.Element {
+    // @ts-ignore
+    const geojson: FylkeFeatureCollection = geoJsonData;
+  const handleFylkeClick = (fylkeName : string) => {
     onFylkeClick(fylkeName); // Update filter
   };
 

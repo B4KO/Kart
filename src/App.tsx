@@ -1,5 +1,5 @@
-import { DataProvider } from "./DataContext.jsx";
-import Dashboard from "./Dashboard.jsx"; // New component that consumes the context
+import { DataProvider } from "./DataContext";
+import Dashboard from "./Dashboard"; // New component that consumes the context
 
 function App() {
     return (

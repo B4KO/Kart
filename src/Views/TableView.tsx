@@ -1,7 +1,11 @@
-import { useContext, useState } from "react";
-import { DataContext } from "../DataContext";
+import { useState } from "react";
+import {ProjectInterface} from "../Types/types";
 
-function TableView({ projects }) {
+export type TableViewPorps = {
+    projects: ProjectInterface[];
+}
+
+function TableView({ projects }: TableViewPorps): JSX.Element {
 
   // Pagination states
   const [currentPage, setCurrentPage] = useState(0);
@@ -16,7 +20,7 @@ function TableView({ projects }) {
   const endIndex = startIndex + pageSize;
   const currentProjects = projects.slice(startIndex, endIndex);
 
-  const [selectedProject, setSelectedProject] = useState(null);
+  const [selectedProject, setSelectedProject] = useState<ProjectInterface | null>(null);
 
   return (
       <div className="w-full">
@@ -34,7 +38,7 @@ function TableView({ projects }) {
             </tr>
             </thead>
             <tbody>
-            {currentProjects.map((project, index) => (
+            {currentProjects.map((project: ProjectInterface, index) => (
                 <tr key={index}>
                   <td>
                     <div className="flex flex-col gap-1">
@@ -91,7 +95,7 @@ function TableView({ projects }) {
                 <figure>
                   <img
                       src="https://img.daisyui.com/images/stock/photo-1494232410401-ad00d5433cfa.webp"
-                      alt="Project Image"
+                      alt="Types Image"
                   />
                 </figure>
                 <div className="card-body">
