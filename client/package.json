@@ -4,9 +4,9 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "install:frontend": "npm install",
-    "install:backend": "npm install --prefix ../server",
-    "install": "npm run install:frontend && npm run install:backend",
+    "bootstrap:frontend": "npm install",
+    "bootstrap:backend": "npm install --prefix ../server",
+    "bootstrap": "npm run install:frontend && npm run install:backend",
     "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
     "dev:frontend": "tsc && vite",
     "dev:backend": "npm run dev --prefix ../server",
