@@ -4,13 +4,13 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "dev": "tsc && vite",
-    "build": "tsc && vite build",
-    "lint": "eslint .",
-    "preview": "vite preview",
-    "start:frontend": "npm run dev",
-    "start:backend": "node ./server/server.js",
-    "start": "concurrently \"npm run start:frontend\" \"npm run start:backend\""
+    "install:frontend": "npm install",
+    "install:backend": "npm install --prefix server",
+    "install": "npm run install:frontend && npm run install:backend",
+    "dev": "concurrently \"npm run dev:frontend\" \"npm run dev:backend\"",
+    "dev:frontend": "tsc && vite",
+    "dev:backend": "node ./server/server.js",
+    "build": "tsc && vite build"
   },
   "dependencies": {
     "@fortawesome/fontawesome-free": "^6.7.2",
