@@ -3,7 +3,7 @@ import {FilterInterface, FilterOptions, ProjectInterface} from "../Types/types";
 type FilterFormProps = {
     projects: ProjectInterface[];
     filters: FilterInterface;
-    onFilterChange: (key: FilterOptions, value: string[]) => void;
+    onFilterChange: (key: FilterOptions, value: string | string[]) => void;
     onResetFilters: () => void;
 };
 

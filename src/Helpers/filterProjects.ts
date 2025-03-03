@@ -17,7 +17,7 @@ export function filterProjects(
             !filters.selectedFylke.length || filters.selectedFylke.includes(project.region);
 
         const matchesSearchTerm: boolean =
-            !filters.searchTerm || project.title.toLowerCase().includes(filters.searchTerm.toLowerCase());
+            !filters.searchTerm || project.title.toLowerCase().includes(project.title);
 
         return matchesStatus && matchesSektor && matchesFylke && matchesSearchTerm;
     });

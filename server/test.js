@@ -24,7 +24,7 @@ test('GET /api/v1/read-projects should return 200', async () => {
 });
 
 test('GET /api/v1/read-projects should return expected JSON', async () => {
-  const excelData = readExcelFile('../data/projects.xlsx');
+  const excelData = readExcelFile('./data/projects.xlsx');
 
   const res = await request(serverUrl).get('/api/v1/read-projects');
   

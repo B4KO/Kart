@@ -14,9 +14,9 @@ export const DEFAULT_ACTIVE_TAB : TabOptions = "map";
 // Todo do implement the types for the dropdowns
 export const DEFAULT_FILTERS : FilterInterface = {
     searchTerm: "",
-    selectedFylke: "",
-    selectedSektor: "",
-    selectedStatus: "",
+    selectedFylke: [""],
+    selectedSektor: [""],
+    selectedStatus: [""],
 };
 
 // Default tab configuration
