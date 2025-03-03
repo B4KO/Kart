@@ -7,17 +7,20 @@ export function filterProjects(
     filters: FilterInterface
 ): ProjectInterface[] {
     return projects.filter((project: ProjectInterface): boolean => {
-        const matchesStatus: boolean =
-            !filters.selectedStatus.length || filters.selectedStatus.includes(project.status);
+        console.log(filters.selectedStatus.length);
+        const matchesStatus: boolean = 
+            filters.selectedStatus.length == 1 || filters.selectedStatus.includes(project.status);
 
         const matchesSektor: boolean =
-            !filters.selectedSektor.length || filters.selectedSektor.includes(project.sector);
+            filters.selectedSektor.length == 1 || filters.selectedSektor.includes(project.sector);
 
         const matchesFylke: boolean =
-            !filters.selectedFylke.length || filters.selectedFylke.includes(project.region);
+            filters.selectedFylke.length == 1 || filters.selectedFylke.includes(project.region);
 
         const matchesSearchTerm: boolean =
-            !filters.searchTerm || project.title.toLowerCase().includes(project.title);
+            !filters.searchTerm || 
+            project.title.toLowerCase().includes(filters.searchTerm[0]) || 
+            project.title.includes(filters.searchTerm[0]);
 
         return matchesStatus && matchesSektor && matchesFylke && matchesSearchTerm;
     });
