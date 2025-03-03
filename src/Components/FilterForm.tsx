@@ -3,50 +3,81 @@ import {FilterInterface, FilterOptions, ProjectInterface} from "../Types/types";
 type FilterFormProps = {
     projects: ProjectInterface[];
     filters: FilterInterface;
-    onFilterChange: (key: FilterOptions, value: string) => void;
+    onFilterChange: (key: FilterOptions, value: string | string[]) => void;
     onResetFilters: () => void;
-}
+};
 
-export default function FilterForm({ projects, filters, onFilterChange, onResetFilters }: FilterFormProps) : JSX.Element {
+export default function FilterForm({ projects, filters, onFilterChange, onResetFilters }: FilterFormProps): JSX.Element {
+    // Extract unique values for each category
+    const sectors = [...new Set(projects.map((p) => p.sector))];
+    const statuses = [...new Set(projects.map((p) => p.status))];
+    const regions = [...new Set(projects.map((p) => p.region))];
+
+    // Helper function to toggle checkbox selection
+    const handleCheckboxChange = (key: FilterOptions, selectedValue: string) => {
+        const currentValues = filters[key] as string[]; // Ensure it's an array
+        const newValues = currentValues.includes(selectedValue)
+            ? currentValues.filter((v) => v !== selectedValue) // Remove if already selected
+            : [...currentValues, selectedValue]; // Add if not selected
+
+        onFilterChange(key, newValues);
+    };
+
     return (
         <div className="w-full">
-            <div className="flex items-center gap-4 m-4">
-                <select
-                    className="select select-bordered flex-1"
-                    value={filters.selectedSektor}
-                    onChange={(e) => onFilterChange("selectedSektor", e.target.value)}
-                >
-                    <option value="">Sektor</option>
-                    {[...new Set(projects.map((p) => p.sector))].map((sector) => (
-                        <option key={sector} value={sector}>
-                            {sector}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    className="select select-bordered flex-1"
-                    value={filters.selectedStatus}
-                    onChange={(e) => onFilterChange("selectedStatus", e.target.value)}
-                >
-                    <option value="">Status</option>
-                    {[...new Set(projects.map((p) => p.status))].map((status) => (
-                        <option key={status} value={status}>
-                            {status}
-                        </option>
-                    ))}
-                </select>
-                <select
-                    className="select select-bordered flex-1"
-                    value={filters.selectedFylke}
-                    onChange={(e) => onFilterChange("selectedFylke", e.target.value)}
-                >
-                    <option value="">Fylke</option>
-                    {[...new Set(projects.map((p) => p.region))].map((region) => (
-                        <option key={region} value={region}>
-                            {region}
-                        </option>
-                    ))}
-                </select>
+            <div className="flex flex-row gap-4 m-4">
+                {/* Sektor Filter */}
+                <details className="border p-2 rounded">
+                    <summary className="cursor-pointer font-semibold">Velg Sektor</summary>
+                    <form className="p-2 flex flex-col gap-1">
+                        {sectors.map((sector) => (
+                            <label key={sector}>
+                                <input
+                                    type="checkbox"
+                                    checked={filters.selectedSektor.includes(sector)}
+                                    onChange={() => handleCheckboxChange("selectedSektor", sector)}
+                                />
+                                {sector}
+                            </label>
+                        ))}
+                    </form>
+                </details>
+
+                {/* Status Filter */}
+                <details className="border p-2 rounded">
+                    <summary className="cursor-pointer font-semibold">Velg Status</summary>
+                    <form className="p-2 flex flex-col gap-1">
+                        {statuses.map((status) => (
+                            <label key={status}>
+                                <input
+                                    type="checkbox"
+                                    checked={filters.selectedStatus.includes(status)}
+                                    onChange={() => handleCheckboxChange("selectedStatus", status)}
+                                />
+                                {status}
+                            </label>
+                        ))}
+                    </form>
+                </details>
+
+                {/* Fylke Filter */}
+                <details className="border p-2 rounded">
+                    <summary className="cursor-pointer font-semibold">Velg Fylke</summary>
+                    <form className="p-2 flex flex-col gap-1">
+                        {regions.map((region) => (
+                            <label key={region}>
+                                <input
+                                    type="checkbox"
+                                    checked={filters.selectedFylke.includes(region)}
+                                    onChange={() => handleCheckboxChange("selectedFylke", region)}
+                                />
+                                {region}
+                            </label>
+                        ))}
+                    </form>
+                </details>
+
+                {/* Search Input */}
                 <input
                     type="text"
                     placeholder="Søk"
@@ -54,6 +85,8 @@ export default function FilterForm({ projects, filters, onFilterChange, onResetF
                     value={filters.searchTerm}
                     onChange={(e) => onFilterChange("searchTerm", e.target.value)}
                 />
+
+                {/* Reset Filters Button */}
                 <button className="btn" onClick={onResetFilters}>
                     Nullstill
                 </button>

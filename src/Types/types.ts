@@ -26,10 +26,10 @@ export interface ProjectInterface {
 }
 
 export interface FilterInterface {
-    selectedSektor: string;
-    selectedStatus: string;
-    selectedFylke: string;
-    searchTerm: string;
+    selectedSektor: string | string[];
+    selectedStatus: string | string[];
+    selectedFylke: string | string[];
+    searchTerm: string | string[];
 }
 
 export interface TabsInterface {

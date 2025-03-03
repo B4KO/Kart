@@ -26,7 +26,7 @@ function Dashboard(): JSX.Element {
 
   const handleResetFilters = () => setFilters(INITIAL_FILTERS);
 
-  const handleFilterChange = (field: FilterOptions, value: string): void => {
+  const handleFilterChange = (field: FilterOptions, value: string | string[]): void => {
     setFilters((prev) => ({ ...prev, [field]: value }));
   };
 
