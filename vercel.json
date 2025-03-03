@@ -5,7 +5,7 @@
       "src": "client/package.json",
       "use": "@vercel/static-build",
       "config": {
-        "distDir": "dist" // or "build" if that's your output folder
+        "distDir": "build"
       }
     },
     {
