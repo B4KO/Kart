@@ -7,7 +7,6 @@ export function filterProjects(
     filters: FilterInterface
 ): ProjectInterface[] {
     return projects.filter((project: ProjectInterface): boolean => {
-        console.log(filters.selectedStatus.length);
         const matchesStatus: boolean = 
             filters.selectedStatus.length == 1 || filters.selectedStatus.includes(project.status);
 
