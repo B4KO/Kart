@@ -1,6 +1,7 @@
 import Map from "../Components/Map";
 import ResultsCard from "../Components/ResultsCard";
-import geoJsonData from "../../data/Forenklet_Fylker.json";
+//This is bad practice
+import geoJsonData from "../../../data/Forenklet_Fylker.json";
 import {FylkeFeatureCollection, ProjectInterface} from "../Types/types";
 
 export type MapViewProps = {

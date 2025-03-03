@@ -1,8 +1,9 @@
 {
   "name": "server",
   "version": "1.0.0",
-  "main": "index.js",
+  "main": "server.js",
   "scripts": {
+    "dev": "node server.js",
     "test": "NODE_ENV=test jest --forceExit --detectOpenHandles"
   },
   "keywords": [],
